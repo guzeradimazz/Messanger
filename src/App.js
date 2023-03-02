@@ -1,7 +1,14 @@
 import './App.css'
+import { LoginScreen } from './screens/LoginScreen/LoginScreen'
 
 function App() {
-  return <div className="App"></div>
+
+  const user = null
+  return <div className="App">
+    {
+      user ? null : <LoginScreen/>
+    }
+  </div>
 }
 
 export default App
