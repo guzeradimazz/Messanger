@@ -1,8 +1,7 @@
-import { async } from '@firebase/util'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectUser, setUser } from '../../features/userSlice'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../features/userSlice'
 import { auth } from '../../firebase'
 import './LoginScreen.styles.scss'
 
@@ -14,12 +13,17 @@ export const LoginScreen = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user
-        dispatch(setUser(user))
+        dispatch(
+          setUser({
+            displayName: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+            id: user.uid
+          })
+        )
       })
       .catch((error) => console.log(error.message))
   }
-
-  useEffect(() => {}, [])
 
   return (
     <div className="login">

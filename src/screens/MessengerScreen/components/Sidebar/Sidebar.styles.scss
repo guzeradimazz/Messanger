@@ -1,0 +1,57 @@
+.sidebar {
+  height: 100%;
+  flex: 0.25;
+  box-shadow: 2px 0 10px #eaeaea;
+  position: relative;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      margin: 10px auto 20px auto;
+      width: 90%;
+      justify-content: space-around;
+
+      img {
+        width: 50px;
+        border-radius: 50%;
+      }
+
+      button{
+        border-radius: 10px;
+        border: none;
+        height: 30px;
+        width: 70%;
+      }
+    }
+
+    input {
+      width: 80%;
+      margin: 10px 0;
+      height: 40px;
+      padding-left: 5px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 0 10px #c0c0c0;
+      outline: none;
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 20px auto;
+    justify-content: space-around;
+    bottom: 0;
+    position: absolute;
+
+    img {
+      width: 40px;
+    }
+  }
+}
