@@ -1,12 +1,14 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../features/userSlice'
 import { auth } from '../../firebase'
 import './LoginScreen.styles.scss'
+import { selectUsers } from '../../features/usersSlice'
 
 export const LoginScreen = () => {
   const dispatch = useDispatch()
+  const users = useSelector(selectUsers)
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider()
@@ -23,6 +25,9 @@ export const LoginScreen = () => {
         )
       })
       .catch((error) => console.log(error.message))
+
+
+
   }
 
   return (

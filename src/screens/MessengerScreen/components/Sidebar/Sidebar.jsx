@@ -19,7 +19,7 @@ import { Modal } from './components/Modal/Modal'
 
 export const Sidebar = () => {
   const dispatch = useDispatch()
-  const [isModalShow, setModalShow] = useState(false)
+  const [isModalShow, setModalShow] = useState(true)
   const [threadName, setThreadName] = useState('')
 
   const user = useSelector(selectUser)
@@ -48,7 +48,8 @@ export const Sidebar = () => {
       const newThread = {
         name: threadName,
         userId: user.user.id,
-        date: Timestamp.fromDate(new Date()).seconds
+        date: Timestamp.fromDate(new Date()).seconds,
+        messages:[]
       }
       try {
         await setDoc(doc(db, 'threads', newThread.name), newThread)

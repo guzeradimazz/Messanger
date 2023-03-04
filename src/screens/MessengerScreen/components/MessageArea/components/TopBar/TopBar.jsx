@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './TopBar.styles.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectChoosedThread,
   removeChoosedThread
 } from '../../../../../../features/choosedThreadSlice'
+import { ModalMoreActions } from '../ModalMoreActions/ModalMoreActions'
 
 export const TopBar = () => {
   const selectedThread = useSelector(selectChoosedThread)
+
+  const [isModalShown, setModalShown] = useState(false)
   const dispatch = useDispatch()
 
   const deleteSelectionThread = () => {
     dispatch(removeChoosedThread(null))
+    setModalShown(false)
   }
   return (
     <div className="messagearea__top">
@@ -25,7 +29,6 @@ export const TopBar = () => {
         alt="<"
         onClick={deleteSelectionThread}
       />
-
       <p
         className="messagearea__top-headText"
         style={{
@@ -36,7 +39,6 @@ export const TopBar = () => {
           ? selectedThread.choosedThread.name
           : 'Messenger'}
       </p>
-
       <img
         style={{
           opacity: !selectedThread.isSelected ? '0' : '1',
@@ -45,6 +47,11 @@ export const TopBar = () => {
         }}
         src="https://cdn-icons-png.flaticon.com/512/512/512142.png"
         alt="..."
+        onClick={() => setModalShown((prev) => !prev)}
+      />
+      <ModalMoreActions
+        isModalShown={isModalShown}
+        setModalShown={setModalShown}
       />
     </div>
   )
