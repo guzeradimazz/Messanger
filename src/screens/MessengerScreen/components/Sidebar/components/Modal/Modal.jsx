@@ -5,10 +5,19 @@ export const Modal = ({
   handleAddThread,
   setModalShow,
   threadName,
-  setThreadName
+  setThreadName,
+  isModalShow
 }) => {
   return (
-    <div className="modal">
+    <div
+      className="modal"
+      style={{
+        opacity: isModalShow ? '0' : '1',
+        transition: 'all 0.3s',
+        visibility: isModalShow ? 'hidden' : 'visible',
+        transform: `translateY(${!isModalShow ? '0%' : '200%'})`
+      }}
+    >
       <div className="modal__container">
         <img
           onClick={() => setModalShow((prev) => !prev)}

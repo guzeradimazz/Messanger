@@ -3,6 +3,8 @@
   margin: 10px auto;
   height: 80%;
   overflow: scroll;
+  background-color: #fff;
+  z-index: 1;
 
   &__item {
     cursor: pointer;

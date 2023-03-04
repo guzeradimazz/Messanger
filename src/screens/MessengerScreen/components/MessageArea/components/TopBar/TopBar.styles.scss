@@ -1,0 +1,22 @@
+.messagearea__top {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  border-bottom: 0.3px solid #c0c0c0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  position: relative;
+
+  img {
+    cursor: pointer;
+    width: 30px;
+  }
+
+  &-headText {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 18px;
+    
+  }
+}

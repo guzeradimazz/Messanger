@@ -67,14 +67,13 @@ export const Sidebar = () => {
       <SidebarTop user={user.user} setModalShow={setModalShow} />
       <SidebarThread />
       <SidebarBottom />
-      {isModalShow && (
-        <Modal
-          handleAddThread={handleAddThread}
-          setModalShow={setModalShow}
-          threadName={threadName}
-          setThreadName={setThreadName}
-        />
-      )}
+      <Modal
+        handleAddThread={handleAddThread}
+        setModalShow={setModalShow}
+        threadName={threadName}
+        setThreadName={setThreadName}
+        isModalShow={isModalShow}
+      />
     </div>
   )
 }

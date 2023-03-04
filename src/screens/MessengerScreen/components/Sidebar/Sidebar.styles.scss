@@ -3,11 +3,14 @@
   flex: 0.25;
   box-shadow: 2px 0 10px #eaeaea;
   position: relative;
+  z-index: 1;
 
   &__top {
     display: flex;
     align-items: center;
     flex-direction: column;
+    z-index: inherit;
+    background-color: #fff;
 
     .user-info {
       display: flex;
@@ -50,10 +53,11 @@
     display: flex;
     align-items: center;
     width: 100%;
-    margin: 20px auto;
     justify-content: space-around;
     bottom: 0;
+    height: 60px;
     position: absolute;
+    background-color: #fff;
 
     img {
       width: 40px;
