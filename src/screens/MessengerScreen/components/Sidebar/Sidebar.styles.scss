@@ -21,12 +21,17 @@
         border-radius: 50%;
       }
 
-      button{
-        border-radius: 10px;
-        border: none;
-        height: 30px;
-        width: 70%;
-      }
+      
+    }
+    button{
+      border-radius: 10px;
+      border: none;
+      height: 40px;
+      width: 50%;
+      background-color: #FB9F82;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     input {

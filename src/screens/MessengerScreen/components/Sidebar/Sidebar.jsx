@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Sidebar.styles.scss'
 import { SidebarTop } from './components/SidebarTop'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,12 +11,16 @@ import {
   doc,
   getDocs,
   query,
-  collection
+  collection,
+  Timestamp
 } from 'firebase/firestore'
 import { db } from '../../../../firebase'
+import { Modal } from './components/Modal/Modal'
 
 export const Sidebar = () => {
   const dispatch = useDispatch()
+  const [isModalShow, setModalShow] = useState(false)
+  const [threadName, setThreadName] = useState('')
 
   const user = useSelector(selectUser)
 
@@ -39,22 +43,38 @@ export const Sidebar = () => {
     getThreads()
   }, [])
 
-
   const handleAddThread = async () => {
-    const threadName = prompt('enter')
-    const newThread = {
-      name: threadName,
-      // date: Timestamp.fromDate(new Date())
+    if (threadName) {
+      const newThread = {
+        name: threadName,
+        userId: user.user.id,
+        date: Timestamp.fromDate(new Date()).seconds
+      }
+      try {
+        await setDoc(doc(db, 'threads', newThread.name), newThread)
+        getThreads()
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setModalShow((prev) => !prev)
+        setThreadName('')
+      }
     }
-    await setDoc(doc(db, 'threads', newThread.name), newThread)
-    getThreads()
   }
 
   return (
     <div className="sidebar">
-      <SidebarTop user={user.user} handleAddThread={handleAddThread} />
+      <SidebarTop user={user.user} setModalShow={setModalShow} />
       <SidebarThread />
       <SidebarBottom />
+      {isModalShow && (
+        <Modal
+          handleAddThread={handleAddThread}
+          setModalShow={setModalShow}
+          threadName={threadName}
+          setThreadName={setThreadName}
+        />
+      )}
     </div>
   )
 }

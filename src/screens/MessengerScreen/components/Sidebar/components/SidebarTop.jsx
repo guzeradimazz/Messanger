@@ -1,7 +1,6 @@
 import React from 'react'
 
-export const SidebarTop = ({ user, handleAddThread }) => {
-
+export const SidebarTop = ({ user, setModalShow }) => {
   return (
     <div className="sidebar__top">
       <div className="user-info">
@@ -9,7 +8,9 @@ export const SidebarTop = ({ user, handleAddThread }) => {
         <p>{user.displayName}</p>
       </div>
       <input type="text" placeholder="Find dialog" />
-      <button onClick={handleAddThread}>create dialog</button>
+      <button onClick={() => setModalShow((prev) => !prev)}>
+        create dialog
+      </button>
     </div>
   )
 }

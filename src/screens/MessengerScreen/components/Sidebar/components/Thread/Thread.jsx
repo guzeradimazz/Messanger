@@ -1,7 +1,17 @@
 import React from 'react'
 import './Thread.styles.scss'
 
-export const Thread = ({name}) => {
+export const Thread = ({name,date}) => {
+
+  const parseDate = (seconds)=>{
+    const now = new Date()
+    const temp = new Date(seconds*1000)
+
+    const hours = temp.getHours()
+    const minutes = temp.getMinutes()
+    return `${hours}:${minutes}`
+  }
+
   return (
     <div className='threads__item'>
       <img
@@ -9,7 +19,7 @@ export const Thread = ({name}) => {
         alt="avatar"
       />
       <h3>{name}</h3>
-      <small>20:00</small>
+      <small>{parseDate(date)}</small>
     </div>
   )
 }
