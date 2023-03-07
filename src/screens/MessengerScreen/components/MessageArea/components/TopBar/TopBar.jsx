@@ -6,6 +6,7 @@ import {
   removeChoosedThread
 } from '../../../../../../features/choosedThreadSlice'
 import { ModalMoreActions } from '../ModalMoreActions/ModalMoreActions'
+import { setMessages } from '../../../../../../features/currentMessages'
 
 export const TopBar = () => {
   const selectedThread = useSelector(selectChoosedThread)
@@ -16,6 +17,7 @@ export const TopBar = () => {
   const deleteSelectionThread = () => {
     dispatch(removeChoosedThread(null))
     setModalShown(false)
+    dispatch(setMessages([]))
   }
   return (
     <div className="messagearea__top">

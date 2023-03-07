@@ -1,5 +1,6 @@
 import React from 'react'
 import './Modal.styles.scss'
+import { Button } from '../../../../../../components/Button/Button'
 
 export const Modal = ({
   handleAddThread,
@@ -31,7 +32,7 @@ export const Modal = ({
           type="text"
           placeholder="Type name of your thread"
         />
-        <button onClick={handleAddThread}>create thread!</button>
+        <Button onClick={handleAddThread} text={'create thread!'} />
       </div>
     </div>
   )

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectUser } from '../../../../features/userSlice'
 import { SidebarBottom } from './components/SidebarBottom'
 import { SidebarThread } from './components/SidebarThread'
-import { setThreads } from '../../../../features/threadsSlice'
+import { selectThreads, setThreads } from '../../../../features/threadsSlice'
 import {
   setDoc,
   doc,
@@ -21,8 +21,11 @@ export const Sidebar = () => {
   const dispatch = useDispatch()
   const [isModalShow, setModalShow] = useState(true)
   const [threadName, setThreadName] = useState('')
+  const [searchInput, setSearchInput] = useState('')
+  const [currentThreads, setCurrentThreads] = useState([])
 
   const user = useSelector(selectUser)
+  const threads = useSelector(selectThreads)
 
   const getThreads = async () => {
     const q = query(collection(db, 'threads'))
@@ -32,16 +35,24 @@ export const Sidebar = () => {
       id: i.id,
       ...i.data()
     }))
-    try {
-      dispatch(setThreads(threadsSnapshot))
-    } catch (error) {
-      console.log(error)
-    }
+    const temp = threadsSnapshot.sort((a, b) => b.date - a.date)
+    dispatch(setThreads(temp))
+    setCurrentThreads(temp)
   }
 
   useEffect(() => {
     getThreads()
   }, [])
+
+  useEffect(() => {
+    if (searchInput) {
+      const searchArray = currentThreads.filter((item) =>
+        item.name.toLowerCase().includes(`${searchInput.toLowerCase()}`)
+      )
+      setCurrentThreads(searchArray)
+      console.log(currentThreads)
+    } else getThreads()
+  }, [searchInput])
 
   const handleAddThread = async () => {
     if (threadName) {
@@ -49,24 +60,24 @@ export const Sidebar = () => {
         name: threadName,
         userId: user.user.id,
         date: Timestamp.fromDate(new Date()).seconds,
-        messages:[]
+        messages: []
       }
-      try {
-        await setDoc(doc(db, 'threads', newThread.name), newThread)
-        getThreads()
-      } catch (error) {
-        console.log(error)
-      } finally {
-        setModalShow((prev) => !prev)
-        setThreadName('')
-      }
+      await setDoc(doc(db, 'threads', newThread.name), newThread)
+      getThreads()
+      setModalShow((prev) => !prev)
+      setThreadName('')
     }
   }
 
   return (
     <div className="sidebar">
-      <SidebarTop user={user.user} setModalShow={setModalShow} />
-      <SidebarThread />
+      <SidebarTop
+        user={user.user}
+        setModalShow={setModalShow}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+      />
+      <SidebarThread threads={currentThreads} />
       <SidebarBottom />
       <Modal
         handleAddThread={handleAddThread}

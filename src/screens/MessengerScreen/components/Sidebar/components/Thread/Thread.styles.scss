@@ -1,7 +1,7 @@
 .threads {
   width: 90%;
   margin: 10px auto;
-  height: 80%;
+  height: 50%;
   overflow: scroll;
   background-color: #fff;
   z-index: 1;
@@ -9,12 +9,14 @@
   &__item {
     cursor: pointer;
     border-radius: 10px;
-    box-shadow: 0 0 10px #c0c0c0;
     display: flex;
+    box-shadow: 0 0 10px #c0c0c0;
     padding: 10px;
     width: 90%;
     margin: 20px auto;
     align-items: center;
+    transition: 0.3s ease-in;
+    background-color: #fff;
     position: relative;
 
     h3 {
@@ -36,4 +38,11 @@
       color: #c0c0c0;
     }
   }
+
+  &__item:hover {
+    transition: 0.3s ease-in;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #ea9c5c;
+  }
+
 }

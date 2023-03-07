@@ -16,12 +16,12 @@ export const SidebarBottom = () => {
   return (
     <div className='sidebar__bottom'>
       <img
-        src="https://cdn-icons-png.flaticon.com/512/9762/9762334.png"
+        src="https://cdn-icons-png.flaticon.com/512/126/126467.png"
         alt="logout"
         onClick={handleLogOut}
       />
       <img
-        src="https://cdn-icons-png.flaticon.com/512/2956/2956958.png"
+        src="https://cdn-icons-png.flaticon.com/512/900/900797.png"
         alt="settings"
       />
     </div>

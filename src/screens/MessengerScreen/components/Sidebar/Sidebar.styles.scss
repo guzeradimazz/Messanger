@@ -4,6 +4,7 @@
   box-shadow: 2px 0 10px #eaeaea;
   position: relative;
   z-index: 1;
+  background-color: #fff;
 
   &__top {
     display: flex;
@@ -23,20 +24,10 @@
         width: 50px;
         border-radius: 50%;
       }
-
-      
     }
-    button{
-      border-radius: 10px;
-      border: none;
-      height: 40px;
-      width: 50%;
-      background-color: #FB9F82;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    .neumorph__button {
+      margin: 10px 0;
     }
-
     input {
       width: 80%;
       margin: 10px 0;
@@ -55,12 +46,22 @@
     width: 100%;
     justify-content: space-around;
     bottom: 0;
-    height: 60px;
+    height: 90px;
     position: absolute;
     background-color: #fff;
 
     img {
-      width: 40px;
+      cursor: pointer;
+      width: 50px;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 0 15px #c0c0c0;
+      transition: all 0.3s ease;
+    }
+    img:hover{
+      transition: all 0.3s ease;
+      transform: scale(1.2);
+      box-shadow: 0 0 15px #ea9c5c;
     }
   }
 }

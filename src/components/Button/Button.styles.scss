@@ -1,0 +1,26 @@
+.neumorph__button {
+  width: 170px;
+  height: 50px;
+  border-radius: 50px;
+  cursor: pointer;
+  align-items: center;
+  box-shadow: 0 0 7px #c0c0c0;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  justify-content: center;
+
+  p {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: lighter;
+    width: 100%;
+    text-align: center;
+  }
+}
+.neumorph__button:hover {
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px #ea9c5c;
+  transform: translateY(-5px);
+  transform: scale(1.05);
+}

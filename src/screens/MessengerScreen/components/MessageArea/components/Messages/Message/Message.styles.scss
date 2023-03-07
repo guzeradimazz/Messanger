@@ -1,17 +1,25 @@
-.message{
+.message {
   display: flex;
   height: 60px;
   background-color: #fff;
   box-shadow: 0 0 5px #c0c0c0;
   border-radius: 10px;
   width: fit-content;
-  padding: 5px;
   align-items: center;
+  justify-content: space-around;
   margin: 5px 0;
-  
-  img{
+  padding: 10px;
+
+  img {
     width: 35px;
     border-radius: 50%;
     background-color: #c0c;
+    margin: 10px;
+  }
+
+  &__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
   }
 }

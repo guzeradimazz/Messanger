@@ -13,6 +13,7 @@ import {
 } from 'firebase/firestore'
 import { getFirestore } from 'firebase/firestore'
 import { auth } from '../../firebase'
+import { Button } from '../../components/Button/Button'
 
 export const LoginScreen = () => {
   const dispatch = useDispatch()
@@ -63,7 +64,7 @@ export const LoginScreen = () => {
     <div className="login">
       <div className="login__modal">
         <h1>messenger</h1>
-        <button onClick={googleSignIn}>login via google</button>
+        <Button onClick={googleSignIn} text={'login'} />
       </div>
     </div>
   )

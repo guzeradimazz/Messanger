@@ -9,6 +9,7 @@ import { selectUser } from '../../../../features/userSlice'
 import { addDoc, collection, getDocs, Timestamp } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { setMessages } from '../../../../features/currentMessages'
+import { Plug } from './components/Plug/Plug'
 
 export const MessageArea = () => {
   const dispatch = useDispatch()
@@ -59,7 +60,7 @@ export const MessageArea = () => {
   return (
     <div className="messagearea">
       <TopBar />
-      {selectedThread.isSelected && (
+      {selectedThread.isSelected ? (
         <div style={{ height: 'inherit' }}>
           <Messages />
           <BottomBar
@@ -68,6 +69,8 @@ export const MessageArea = () => {
             sendMessage={sendMessage}
           />
         </div>
+      ) : (
+        <Plug />
       )}
     </div>
   )
