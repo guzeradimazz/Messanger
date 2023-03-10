@@ -1,20 +1,31 @@
 import React from 'react'
 import { Thread } from './Thread/Thread'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setChoosedThread } from '../../../../../features/choosedThreadSlice'
+import { DARK, LIGHT } from '../../../../../utils/Theme/theme'
+import { selectTheme } from '../../../../../features/themeSlice'
 
-export const SidebarThread = ({threads}) => {
+export const SidebarThread = ({ threads }) => {
   const dispatch = useDispatch()
 
-  const setChoosedThreadToMessages = (thread) => {
+  const setChoosedThreadToMessages = thread => {
     dispatch(setChoosedThread(thread))
   }
 
+  const theme = useSelector(selectTheme)
+
   return (
-    <div className="threads">
-      {threads.map((i) => (
+    <div
+      className='threads'
+      style={{
+        background: `${
+          theme.theme === 'light' ? LIGHT.background : DARK.background
+        }`,
+      }}>
+      {threads.map(i => (
         <Thread
-          onClick={()=>setChoosedThreadToMessages(i)}
+          theme={theme.theme}
+          onClick={() => setChoosedThreadToMessages(i)}
           key={i.id}
           name={i.name}
           date={i.date}

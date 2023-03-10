@@ -23,11 +23,11 @@ export const MessageArea = () => {
       const threadId = selectedThread.choosedThread.id
       const messagesRef = collection(db, 'threads', threadId, 'messages')
 
-      const newMessageRef = await addDoc(messagesRef, {
+      await addDoc(messagesRef, {
         userId: user.user.id,
         message: message,
         id: 'id' + Math.random().toString(16).slice(2),
-        date: Timestamp.fromDate(new Date()).seconds
+        date: Timestamp.fromDate(new Date()).seconds,
       })
       try {
         getMessages()
@@ -44,7 +44,7 @@ export const MessageArea = () => {
       const messagesRef = collection(db, 'threads', threadId, 'messages')
       const messages = await getDocs(messagesRef)
       const unSortedMessages = []
-      messages.forEach((doc) => {
+      messages.forEach(doc => {
         const data = doc.data()
         unSortedMessages.push(data)
       })
@@ -55,10 +55,10 @@ export const MessageArea = () => {
 
   useEffect(() => {
     if (selectedThread.isSelected) getMessages()
-  }, [selectedThread.isSelected])
+  }, [selectedThread.isSelected, selectedThread.choosedThread])
 
   return (
-    <div className="messagearea">
+    <div className='messagearea'>
       <TopBar />
       {selectedThread.isSelected ? (
         <div style={{ height: 'inherit' }}>

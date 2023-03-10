@@ -4,13 +4,7 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '../../features/userSlice'
 import './LoginScreen.styles.scss'
 import { setUsers } from '../../features/usersSlice'
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc
-} from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { getFirestore } from 'firebase/firestore'
 import { auth } from '../../firebase'
 import { Button } from '../../components/Button/Button'
@@ -21,6 +15,9 @@ export const LoginScreen = () => {
   const googleSignIn = async () => {
     const firestore = getFirestore()
     const provider = new GoogleAuthProvider()
+    provider.setCustomParameters({
+      prompt: 'select_account',
+    })
 
     try {
       const result = await signInWithPopup(auth, provider)
@@ -32,7 +29,7 @@ export const LoginScreen = () => {
         displayName: user.displayName,
         email: user.email,
         photo: user.photoURL,
-        id: user.uid
+        id: user.uid,
       }
 
       if (!userDoc.exists()) {
@@ -49,7 +46,7 @@ export const LoginScreen = () => {
       const usersCollectionRef = collection(firestore, 'users')
       const usersSnapshot = await getDocs(usersCollectionRef)
       const users = []
-      usersSnapshot.forEach((doc) => {
+      usersSnapshot.forEach(doc => {
         const data = doc.data()
         users.push(data)
       })
@@ -61,8 +58,8 @@ export const LoginScreen = () => {
   }
 
   return (
-    <div className="login">
-      <div className="login__modal">
+    <div className='login'>
+      <div className='login__modal'>
         <h1>messenger</h1>
         <Button onClick={googleSignIn} text={'login'} />
       </div>

@@ -3,6 +3,8 @@ import usersReducer from '../features/usersSlice'
 import threadsReducer from '../features/threadsSlice'
 import choosedThreadReducer from '../features/choosedThreadSlice'
 import currentMessagesReducer from '../features/currentMessages'
+import settingsReducer from '../features/settingsSlice'
+import themeReducer from '../features/themeSlice'
 import { combineReducers } from '@reduxjs/toolkit'
 
 export const rootReducer = combineReducers({
@@ -10,5 +12,7 @@ export const rootReducer = combineReducers({
   users: usersReducer,
   threads: threadsReducer,
   choosedThread: choosedThreadReducer,
-  messages: currentMessagesReducer
+  messages: currentMessagesReducer,
+  settings: settingsReducer,
+  theme: themeReducer,
 })

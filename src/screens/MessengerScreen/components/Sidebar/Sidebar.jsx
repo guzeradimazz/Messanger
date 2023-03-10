@@ -5,17 +5,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectUser } from '../../../../features/userSlice'
 import { SidebarBottom } from './components/SidebarBottom'
 import { SidebarThread } from './components/SidebarThread'
-import { selectThreads, setThreads } from '../../../../features/threadsSlice'
+import { setThreads } from '../../../../features/threadsSlice'
 import {
   setDoc,
   doc,
   getDocs,
   query,
   collection,
-  Timestamp
+  Timestamp,
 } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { Modal } from './components/Modal/Modal'
+import { selectChoosedThread } from '../../../../features/choosedThreadSlice'
+import { selectTheme } from '../../../../features/themeSlice'
+import { DARK, LIGHT } from '../../../../utils/Theme/theme'
 
 export const Sidebar = () => {
   const dispatch = useDispatch()
@@ -25,15 +28,16 @@ export const Sidebar = () => {
   const [currentThreads, setCurrentThreads] = useState([])
 
   const user = useSelector(selectUser)
-  const threads = useSelector(selectThreads)
+  const choosedThread = useSelector(selectChoosedThread)
+  const theme = useSelector(selectTheme)
 
   const getThreads = async () => {
     const q = query(collection(db, 'threads'))
 
     const querySnapshot = await getDocs(q)
-    const threadsSnapshot = querySnapshot.docs.map((i) => ({
+    const threadsSnapshot = querySnapshot.docs.map(i => ({
       id: i.id,
-      ...i.data()
+      ...i.data(),
     }))
     const temp = threadsSnapshot.sort((a, b) => b.date - a.date)
     dispatch(setThreads(temp))
@@ -45,12 +49,15 @@ export const Sidebar = () => {
   }, [])
 
   useEffect(() => {
+    getThreads()
+  }, [choosedThread.isSelected])
+
+  useEffect(() => {
     if (searchInput) {
-      const searchArray = currentThreads.filter((item) =>
+      const searchArray = currentThreads.filter(item =>
         item.name.toLowerCase().includes(`${searchInput.toLowerCase()}`)
       )
       setCurrentThreads(searchArray)
-      console.log(currentThreads)
     } else getThreads()
   }, [searchInput])
 
@@ -60,18 +67,30 @@ export const Sidebar = () => {
         name: threadName,
         userId: user.user.id,
         date: Timestamp.fromDate(new Date()).seconds,
-        messages: []
+        messages: [],
       }
       await setDoc(doc(db, 'threads', newThread.name), newThread)
       getThreads()
-      setModalShow((prev) => !prev)
+      setModalShow(prev => !prev)
       setThreadName('')
     }
   }
 
   return (
-    <div className="sidebar">
+    <div
+      className='sidebar'
+      style={{
+        background: `${
+          theme.theme === 'light' ? LIGHT.background : DARK.background
+        }`,
+        boxShadow: `${
+          theme.theme === 'light'
+            ? `2px 0 10px ${LIGHT.shadow}`
+            : `2px 0 10px ${DARK.shadow}`
+        }`,
+      }}>
       <SidebarTop
+        theme={theme.theme}
         user={user.user}
         setModalShow={setModalShow}
         searchInput={searchInput}
