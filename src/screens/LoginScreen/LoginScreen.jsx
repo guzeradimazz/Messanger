@@ -13,6 +13,13 @@ export const LoginScreen = () => {
   const dispatch = useDispatch()
 
   const googleSignIn = async () => {
+    const savedUser = localStorage.getItem('user')
+    if (savedUser) {
+      const user = JSON.parse(savedUser)
+      dispatch(setUser(user))
+      return
+    }
+
     const firestore = getFirestore()
     const provider = new GoogleAuthProvider()
     provider.setCustomParameters({
@@ -37,6 +44,7 @@ export const LoginScreen = () => {
       }
 
       dispatch(setUser(newUser))
+      localStorage.setItem('user', JSON.stringify(newUser))
     } catch (error) {
       console.log('[SETTING USER ERROR]')
       console.log(error.message)

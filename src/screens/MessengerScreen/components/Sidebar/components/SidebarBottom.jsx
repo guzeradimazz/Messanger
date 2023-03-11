@@ -13,6 +13,7 @@ export const SidebarBottom = () => {
   const theme = useSelector(selectTheme)
 
   const handleLogOut = () => {
+    localStorage.clear()
     signOut(auth).then(() => {
       dispatch(logOut(null))
     })

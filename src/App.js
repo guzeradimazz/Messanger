@@ -2,7 +2,7 @@
 import './App.css'
 import { LoginScreen } from './screens/LoginScreen/LoginScreen'
 import { useSelector } from 'react-redux'
-import { selectUser } from './features/userSlice'
+import { selectUser, setUser } from './features/userSlice'
 import { Messenger } from './screens/MessengerScreen/Messenger'
 import { selectSettings } from './features/settingsSlice'
 import { SettingsScreen } from './screens/SettingsScreen/SettingsScreen'
@@ -16,6 +16,13 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    try {
+      const savedUser = localStorage.getItem('user')
+      const user = JSON.parse(savedUser)
+      dispatch(setUser(user))
+    } catch (error) {
+      console.log('[NO USERS IN LOCAL STORAGE]')
+    }
     dispatch(removeChoosedThread(null))
   }, [])
 

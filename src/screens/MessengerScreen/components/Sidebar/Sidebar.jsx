@@ -13,13 +13,13 @@ import {
   query,
   collection,
   Timestamp,
+  onSnapshot,
 } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { Modal } from './components/Modal/Modal'
 import { selectChoosedThread } from '../../../../features/choosedThreadSlice'
 import { selectTheme } from '../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../utils/Theme/theme'
-// import { onValue, ref } from 'firebase/database'
 
 export const Sidebar = () => {
   const dispatch = useDispatch()
@@ -49,14 +49,22 @@ export const Sidebar = () => {
     getThreads()
   }, [])
 
-  // useEffect(() => {
-  //   const threadsRef = ref(db, 'threads')
-  //   // eslint-disable-next-line no-unused-vars
-  //   onValue(threadsRef, _snapshot => {
-  //     // const threads = snapshot.val()
-  //     getThreads()
-  //   })
-  // }, [])
+  useEffect(() => {
+    const threadsRef = collection(db, 'threads')
+    const threadsQuery = query(threadsRef)
+    const unsubscribe = onSnapshot(threadsQuery, snapshot => {
+      const threads = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      threads.sort((a, b) => a.date - b.date)
+      dispatch(setThreads(threads))
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [])
 
   useEffect(() => {
     getThreads()

@@ -17,7 +17,6 @@ export const Messages = () => {
   const users = useSelector(selectUsers)
   const messages = useSelector(selectCurrentMessages)
   const dispatch = useDispatch()
-  // const currentMessages = useSelector(selectCurrentMessages)
   const selectedThread = useSelector(selectChoosedThread)
 
   const setPhoto = userId => {
@@ -26,6 +25,14 @@ export const Messages = () => {
       if (item.id === userId) photo = item.photo
     })
     return photo
+  }
+
+  const setName = userId => {
+    let name = ''
+    users.users.map(item => {
+      if (item.id === userId) name = item.displayName
+    })
+    return name
   }
 
   useEffect(() => {
@@ -38,7 +45,6 @@ export const Messages = () => {
         ...doc.data(),
       }))
       messages.sort((a, b) => a.date - b.date)
-      console.log(messages)
       dispatch(setMessages(messages))
     })
 
@@ -47,24 +53,17 @@ export const Messages = () => {
     }
   }, [])
 
-  // useEffect(() => {
-  //   const threadId = selectedThread.choosedThread.id
-  //   const messagesRef = collection(db, 'threads', threadId, 'messages')
-  //   onChildAdded(messagesRef, snapshot => {
-  //     const newMessage = snapshot.val()
-  //     dispatch(setMessages([...currentMessages, newMessage]))
-  //   })
-  // }, [])
-
   return (
     <div className='messagearea__messages'>
       {messages.messages.map(i => {
         const photo = setPhoto(i.userId)
+        const name = setName(i.userId)
         return (
           <Message
             key={i.id}
             message={i.message}
             photo={photo}
+            name={name}
             isCurrentUser={user.user.id === i.userId ? true : false}
           />
         )

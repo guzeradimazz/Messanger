@@ -6,6 +6,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-image: url('../../imgs/LoginScreen/logo.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
   &__modal {
     width: 500px;
     margin: 0 auto;
@@ -16,7 +21,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: #fff;
+    background-color: #ffffffe0;
   }
   h1 {
     width: 100%;

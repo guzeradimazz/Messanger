@@ -18,7 +18,8 @@ export const MessageArea = () => {
 
   const [message, setMessage] = useState('')
 
-  const sendMessage = async () => {
+  const sendMessage = async e => {
+    e.preventDefault()
     if (user !== null && selectedThread !== null) {
       const threadId = selectedThread.choosedThread.id
       const messagesRef = collection(db, 'threads', threadId, 'messages')
