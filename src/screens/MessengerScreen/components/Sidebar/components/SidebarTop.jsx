@@ -2,6 +2,8 @@ import React from 'react'
 import { Button } from '../../../../../components/Button/Button'
 import { DARK, LIGHT } from '../../../../../utils/Theme/theme'
 import { Text } from '../../../../../components/Text/Text'
+import { useSelector } from 'react-redux'
+import { selectLanguage } from '../../../../../features/languageSlice'
 
 export const SidebarTop = ({
   theme,
@@ -10,6 +12,7 @@ export const SidebarTop = ({
   searchInput,
   setSearchInput,
 }) => {
+  const language = useSelector(selectLanguage)
   return (
     <div
       className='sidebar__top'
@@ -35,11 +38,11 @@ export const SidebarTop = ({
         value={searchInput}
         onChange={e => setSearchInput(e.target.value)}
         type='text'
-        placeholder='Search'
+        placeholder={language.language === 'en' ? 'Search' : 'Поиск'}
       />
       <Button
         onClick={() => setModalShow(prev => !prev)}
-        text={'create dialog'}
+        text={language.language === 'en' ? 'create chat' : 'создать чат'}
       />
     </div>
   )

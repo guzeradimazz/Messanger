@@ -2,9 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
+import { selectLanguage } from '../../../../../../features/languageSlice'
 
 export const Plug = () => {
   const theme = useSelector(selectTheme)
+  const language = useSelector(selectLanguage)
   return (
     <div className='plug'>
       <div
@@ -41,7 +43,11 @@ export const Plug = () => {
           </div>
         </div>
       </div>
-      <p>Select or create thread to start messanger!</p>
+      <p>
+        {language.language === 'en'
+          ? 'Select or create thread to start messanger!'
+          : 'Выберите или создайте диалог для общения!'}
+      </p>
     </div>
   )
 }

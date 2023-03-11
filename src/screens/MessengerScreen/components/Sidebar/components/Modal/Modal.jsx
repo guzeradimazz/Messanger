@@ -4,6 +4,7 @@ import { Button } from '../../../../../../components/Button/Button'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
+import { selectLanguage } from '../../../../../../features/languageSlice'
 
 export const Modal = ({
   handleAddThread,
@@ -13,6 +14,7 @@ export const Modal = ({
   isModalShow,
 }) => {
   const theme = useSelector(selectTheme)
+  const language = useSelector(selectLanguage)
   return (
     <div
       className='modal'
@@ -40,21 +42,28 @@ export const Modal = ({
         <input
           style={{
             boxShadow: `${
-              theme === 'light'
+              theme.theme === 'light'
                 ? `0px 0 10px ${LIGHT.shadow}`
                 : `0px 0 10px ${DARK.shadow}`
             }`,
             background: `${
-              theme === 'light' ? LIGHT.background : DARK.background
+              theme.theme === 'light' ? LIGHT.background : DARK.background
             }`,
-            color: `${theme === 'light' ? LIGHT.textColor : DARK.textColor}`,
+            color: `${
+              theme.theme === 'light' ? LIGHT.textColor : DARK.textColor
+            }`,
           }}
           value={threadName}
           onChange={e => setThreadName(e.target.value)}
           type='text'
-          placeholder='Type name of your thread'
+          placeholder={
+            language.language === 'en' ? 'Type name of your chat' : 'Имя чата'
+          }
         />
-        <Button onClick={handleAddThread} text={'create thread!'} />
+        <Button
+          onClick={handleAddThread}
+          text={language.language === 'en' ? 'Create chat' : 'Создать чат'}
+        />
       </div>
     </div>
   )

@@ -4,10 +4,12 @@ import { Button } from '../../../../../../components/Button/Button'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
+import { selectLanguage } from '../../../../../../features/languageSlice'
 
 export const BottomBar = ({ message, setMessage, sendMessage }) => {
   const [isShown, setIsShown] = useState(false)
   const theme = useSelector(selectTheme)
+  const language = useSelector(selectLanguage)
 
   return (
     <div
@@ -34,7 +36,7 @@ export const BottomBar = ({ message, setMessage, sendMessage }) => {
         type='text'
         value={message}
         onChange={e => setMessage(e.target.value)}
-        placeholder='Message...'
+        placeholder={language.language === 'en' ? 'Message...' : 'Сообщение'}
       />
       <img
         onMouseEnter={() => setIsShown(prev => !prev)}
@@ -60,7 +62,10 @@ export const BottomBar = ({ message, setMessage, sendMessage }) => {
         }}>
         <EmojiPicker onEmojiClick={item => setMessage(message + item.emoji)} />
       </div>
-      <Button onClick={message ? sendMessage : () => {}} text={'send'} />
+      <Button
+        onClick={message ? sendMessage : () => {}}
+        text={language.language === 'en' ? 'send' : 'отправить'}
+      />
     </div>
   )
 }

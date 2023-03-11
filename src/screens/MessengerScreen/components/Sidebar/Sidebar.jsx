@@ -52,8 +52,6 @@ export const Sidebar = () => {
     getThreads()
   }, [choosedThread.isSelected])
 
-
-  // test
   useEffect(() => {
     if (searchInput) {
       const searchArray = currentThreads.filter(item =>
@@ -62,9 +60,6 @@ export const Sidebar = () => {
       setCurrentThreads(searchArray)
     } else getThreads()
   }, [searchInput])
-
-
-
 
   const handleAddThread = async () => {
     if (threadName) {

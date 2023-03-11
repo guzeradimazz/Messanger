@@ -5,6 +5,7 @@ import choosedThreadReducer from '../features/choosedThreadSlice'
 import currentMessagesReducer from '../features/currentMessages'
 import settingsReducer from '../features/settingsSlice'
 import themeReducer from '../features/themeSlice'
+import languageReducer from '../features/languageSlice'
 import { combineReducers } from '@reduxjs/toolkit'
 
 export const rootReducer = combineReducers({
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
   messages: currentMessagesReducer,
   settings: settingsReducer,
   theme: themeReducer,
+  language: languageReducer,
 })

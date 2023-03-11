@@ -4,8 +4,9 @@ import { setSettings } from '../../../../features/settingsSlice'
 import { DARK, LIGHT } from '../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../features/themeSlice'
 import { Text } from '../../../../components/Text/Text'
+import { selectLanguage } from '../../../../features/languageSlice'
 
-const Tab = ({ label, activeTab, onClick, icon }) => {
+const Tab = ({ label, activeTab, onClick, icon, name }) => {
   const theme = useSelector(selectTheme)
   return (
     <div
@@ -21,25 +22,29 @@ const Tab = ({ label, activeTab, onClick, icon }) => {
       }}
       onClick={() => onClick(label)}>
       <img src={icon} alt='icon' />
-      <Text label={label} />
+      <Text label={name} />
     </div>
   )
 }
 
-const tabs = [
-  {
-    id: 'id13r2453g24',
-    label: 'theme',
-    icon: 'https://cdn-icons-png.flaticon.com/512/8818/8818235.png',
-  },
-  {
-    id: 'id13r24dafvrbwe53g24',
-    label: 'language',
-    icon: 'https://cdn-icons-png.flaticon.com/512/3898/3898840.png',
-  },
-]
-
 export const Sidebar = ({ setChoice }) => {
+  const language = useSelector(selectLanguage)
+
+  const tabs = [
+    {
+      id: 'id13r2453g24',
+      label: 'theme',
+      name: language.language === 'en' ? 'theme' : 'тема',
+      icon: 'https://cdn-icons-png.flaticon.com/512/8818/8818235.png',
+    },
+    {
+      id: 'id13r24dafvrbwe53g24',
+      label: 'language',
+      name: language.language === 'en' ? 'language' : 'язык',
+      icon: 'https://cdn-icons-png.flaticon.com/512/3898/3898840.png',
+    },
+  ]
+
   const [activeTab, setActiveTab] = useState(tabs[0].label)
   const dispatch = useDispatch()
   const theme = useSelector(selectTheme)
@@ -62,12 +67,13 @@ export const Sidebar = ({ setChoice }) => {
           theme.theme === 'light' ? LIGHT.background : DARK.background
         }`,
       }}>
-      <Text label={'Settings'} />
+      <Text label={language.language === 'en' ? 'Settings' : 'Настройки'} />
       {tabs.map(i => (
         <Tab
           key={i.id}
           activeTab={activeTab}
           label={i.label}
+          name={i.name}
           onClick={handleClick}
           icon={i.icon}
         />
@@ -84,7 +90,7 @@ export const Sidebar = ({ setChoice }) => {
           src='https://cdn-icons-png.flaticon.com/512/130/130882.png'
           alt='icon'
         />
-        <Text label={'back'} />
+        <Text label={language.language === 'en' ? 'back' : 'назад'} />
       </div>
     </div>
   )

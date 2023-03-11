@@ -9,6 +9,7 @@ import {
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
 import { Text } from '../../../../../../components/Text/Text'
+import { selectLanguage } from '../../../../../../features/languageSlice'
 
 export const ModalMoreActions = ({ isModalShown, setModalShown }) => {
   const dispatch = useDispatch()
@@ -23,6 +24,7 @@ export const ModalMoreActions = ({ isModalShown, setModalShown }) => {
   const currentThread = useSelector(selectChoosedThread)
 
   const theme = useSelector(selectTheme)
+  const language = useSelector(selectLanguage)
   return (
     <div
       className='modal-moreactions'
@@ -51,7 +53,7 @@ export const ModalMoreActions = ({ isModalShown, setModalShown }) => {
             src='https://cdn-icons-png.flaticon.com/512/2782/2782988.png'
             alt='icon'
           />
-          <Text label={'delete'} />
+          <Text label={language.language === 'en' ? 'delete' : 'удалить'} />
         </li>
       </ul>
     </div>

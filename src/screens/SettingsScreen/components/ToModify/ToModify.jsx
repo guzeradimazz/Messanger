@@ -3,19 +3,34 @@ import { Button } from '../../../../components/Button/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTheme, setTheme } from '../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../utils/Theme/theme'
+import { selectLanguage, setLanguage } from '../../../../features/languageSlice'
 
 const ThemeModify = () => {
   const dispatch = useDispatch()
   const theme = useSelector(selectTheme)
+  const language = useSelector(selectLanguage)
   const handleChangeTheme = () => {
-    console.log(theme)
     if (theme.theme === 'light') dispatch(setTheme('dark'))
     else if (theme.theme === 'dark') dispatch(setTheme('light'))
     else return null
   }
   return (
     <div className='themeModify'>
-      <Button onClick={handleChangeTheme} text={'Switch Theme'} />
+      <Button
+        onClick={handleChangeTheme}
+        text={language.language === 'en' ? 'Switch Theme' : 'Изменить тему'}
+      />
+    </div>
+  )
+}
+
+const LanguageModify = () => {
+  const dispatch = useDispatch()
+  const handleChangeLanguage = type => dispatch(setLanguage(type))
+  return (
+    <div className='languageModify'>
+      <Button onClick={() => handleChangeLanguage('en')} text={'English'} />
+      <Button onClick={() => handleChangeLanguage('ru')} text={'Русский'} />
     </div>
   )
 }
@@ -31,6 +46,7 @@ export const ToModify = ({ choice }) => {
         }`,
       }}>
       {choice === 'theme' ? <ThemeModify /> : null}
+      {choice === 'language' ? <LanguageModify /> : null}
     </div>
   )
 }
