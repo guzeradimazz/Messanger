@@ -58,13 +58,17 @@ export const Sidebar = ({ setChoice }) => {
     setActiveTab(label)
     setChoice(label)
   }
-
   return (
     <div
       className='settings__sidebar'
       style={{
         background: `${
           theme.theme === 'light' ? LIGHT.background : DARK.background
+        }`,
+        boxShadow: `${
+          theme.theme === 'light'
+            ? `2px 0 10px ${LIGHT.shadow}`
+            : `2px 0 10px ${DARK.shadow}`
         }`,
       }}>
       <Text label={language.language === 'en' ? 'Settings' : 'Настройки'} />
