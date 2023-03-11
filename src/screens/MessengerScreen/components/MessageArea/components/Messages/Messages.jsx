@@ -37,6 +37,7 @@ export const Messages = () => {
         id: doc.id,
         ...doc.data(),
       }))
+      messages.sort((a, b) => a.date - b.date)
       console.log(messages)
       dispatch(setMessages(messages))
     })
