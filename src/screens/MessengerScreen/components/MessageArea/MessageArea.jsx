@@ -10,6 +10,7 @@ import { addDoc, collection, getDocs, Timestamp } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { setMessages } from '../../../../features/currentMessages'
 import { Plug } from './components/Plug/Plug'
+import { onValue } from 'firebase/database'
 
 export const MessageArea = () => {
   const dispatch = useDispatch()
@@ -52,6 +53,20 @@ export const MessageArea = () => {
       dispatch(setMessages(unSortedMessages))
     }
   }
+
+  useEffect(() => {
+    if (selectedThread.isSelected) {
+      const threadId = selectedThread.choosedThread.id
+      const messagesRef = collection(db, 'threads', threadId, 'messages')
+
+      onValue(messagesRef, snapshot => {
+        let unSortedMessages = []
+        unSortedMessages = snapshot.val()
+        unSortedMessages.sort((a, b) => a.date - b.date)
+        dispatch(setMessages(unSortedMessages))
+      })
+    }
+  }, [])
 
   useEffect(() => {
     if (selectedThread.isSelected) getMessages()
