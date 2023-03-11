@@ -1,14 +1,23 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectUser } from '../../../../../../features/userSlice'
-import { selectCurrentMessages } from '../../../../../../features/currentMessages'
+import {
+  selectCurrentMessages,
+  setMessages,
+} from '../../../../../../features/currentMessages'
 import { Message } from './Message/Message'
 import { selectUsers } from '../../../../../../features/usersSlice'
+import { onValue, ref } from 'firebase/database'
+import { db } from '../../../../../../firebase'
+import { selectChoosedThread } from '../../../../../../features/choosedThreadSlice'
 
 export const Messages = () => {
   const user = useSelector(selectUser)
   const users = useSelector(selectUsers)
   const messages = useSelector(selectCurrentMessages)
+  const dispatch = useDispatch()
+  // const currentMessages = useSelector(selectCurrentMessages)
+  const selectedThread = useSelector(selectChoosedThread)
 
   const setPhoto = userId => {
     let photo = ''
@@ -17,6 +26,25 @@ export const Messages = () => {
     })
     return photo
   }
+
+  useEffect(() => {
+    const threadId = selectedThread.choosedThread.id
+    const messagesRef = ref(db, `threads/${threadId}/messages`)
+    onValue(messagesRef, snapshot => {
+      const messages = snapshot.val()
+      console.log(messages)
+      dispatch(setMessages(messages))
+    })
+  }, [])
+
+  // useEffect(() => {
+  //   const threadId = selectedThread.choosedThread.id
+  //   const messagesRef = ref(db, `threads/${threadId}/messages`)
+  //   onChildAdded(messagesRef, snapshot => {
+  //     const newMessage = snapshot.val()
+  //     dispatch(setMessages([...currentMessages, newMessage]))
+  //   })
+  // }, [])
 
   return (
     <div className='messagearea__messages'>

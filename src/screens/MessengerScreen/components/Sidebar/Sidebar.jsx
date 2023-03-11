@@ -19,6 +19,7 @@ import { Modal } from './components/Modal/Modal'
 import { selectChoosedThread } from '../../../../features/choosedThreadSlice'
 import { selectTheme } from '../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../utils/Theme/theme'
+// import { onValue, ref } from 'firebase/database'
 
 export const Sidebar = () => {
   const dispatch = useDispatch()
@@ -47,6 +48,15 @@ export const Sidebar = () => {
   useEffect(() => {
     getThreads()
   }, [])
+
+  // useEffect(() => {
+  //   const threadsRef = ref(db, 'threads')
+  //   // eslint-disable-next-line no-unused-vars
+  //   onValue(threadsRef, _snapshot => {
+  //     // const threads = snapshot.val()
+  //     getThreads()
+  //   })
+  // }, [])
 
   useEffect(() => {
     getThreads()
