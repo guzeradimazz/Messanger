@@ -77,7 +77,6 @@ export const Sidebar = () => {
         name: threadName,
         userId: user.user.id,
         date: Timestamp.fromDate(new Date()).seconds,
-        messages: [],
       }
       await setDoc(doc(db, 'threads', newThread.name), newThread)
       getThreads()

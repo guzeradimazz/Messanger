@@ -7,9 +7,10 @@ import {
 } from '../../../../../../features/currentMessages'
 import { Message } from './Message/Message'
 import { selectUsers } from '../../../../../../features/usersSlice'
-import { onValue, ref } from 'firebase/database'
+import { query } from 'firebase/database'
 import { db } from '../../../../../../firebase'
 import { selectChoosedThread } from '../../../../../../features/choosedThreadSlice'
+import { collection, onSnapshot } from 'firebase/firestore'
 
 export const Messages = () => {
   const user = useSelector(selectUser)
@@ -29,17 +30,25 @@ export const Messages = () => {
 
   useEffect(() => {
     const threadId = selectedThread.choosedThread.id
-    const messagesRef = ref(db, `threads/${threadId}/messages`)
-    onValue(messagesRef, snapshot => {
-      const messages = snapshot.val()
+    const messagesRef = collection(db, 'threads', threadId, 'messages')
+    const messagesQuery = query(messagesRef)
+    const unsubscribe = onSnapshot(messagesQuery, snapshot => {
+      const messages = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
       console.log(messages)
       dispatch(setMessages(messages))
     })
+
+    return () => {
+      unsubscribe()
+    }
   }, [])
 
   // useEffect(() => {
   //   const threadId = selectedThread.choosedThread.id
-  //   const messagesRef = ref(db, `threads/${threadId}/messages`)
+  //   const messagesRef = collection(db, 'threads', threadId, 'messages')
   //   onChildAdded(messagesRef, snapshot => {
   //     const newMessage = snapshot.val()
   //     dispatch(setMessages([...currentMessages, newMessage]))
