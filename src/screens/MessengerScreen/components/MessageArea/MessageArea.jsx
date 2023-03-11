@@ -23,7 +23,6 @@ export const MessageArea = () => {
     if (user !== null && selectedThread !== null) {
       const threadId = selectedThread.choosedThread.id
       const messagesRef = collection(db, 'threads', threadId, 'messages')
-
       await addDoc(messagesRef, {
         userId: user.user.id,
         message: message,
