@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
 import { selectLanguage } from '../../../../../../features/languageSlice'
+import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
 export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
   const [isShown, setIsShown] = useState(false)
@@ -39,24 +40,17 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
           onChange={e => setMessage(e.target.value)}
           placeholder={language.language === 'en' ? 'Message...' : 'Сообщение'}
         />
-        <img
-          onMouseEnter={() => setIsShown(prev => !prev)}
-          onMouseLeave={() => setIsShown(prev => !prev)}
-          className='emoji-btn'
-          alt='icon'
-          src={
-            isShown
-              ? 'https://cdn-icons-png.flaticon.com/512/1933/1933691.png'
-              : 'https://cdn-icons-png.flaticon.com/512/1933/1933704.png'
-          }
-        />
-        <div>
-          <label htmlFor='file-upload' className='custom-file-upload'>
-            <img
-              src='https://cdn-icons-png.flaticon.com/512/9989/9989240.png'
-              alt='upload'
-            />
-          </label>
+        <div className='file_upload'>
+          <label
+            htmlFor='file-upload'
+            className='custom-file-upload'
+            style={{
+              backgroundImage: `url(${
+                theme.theme === 'light'
+                  ? DEFUALT_ICONS.Clip_def
+                  : NIGHT_ICONS.Clip_night
+              })`,
+            }}></label>
           <input
             id='file-upload'
             accept='images/*'
@@ -66,13 +60,25 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
           />
         </div>
         <div
+          onMouseEnter={() => setIsShown(prev => !prev)}
+          onMouseLeave={() => setIsShown(prev => !prev)}
+          className='emoji-btn'
+          style={{
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Smile_def
+                : NIGHT_ICONS.Smile_night
+            })`,
+          }}
+        />
+        <div
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={() => setIsShown(false)}
           className='emoji'
           style={{
             opacity: isShown ? '1' : '0',
             transition: 'all .3s ease',
-            transform: `translateY(${isShown ? '0%' : '100%'}) scale(${
+            transform: `translateX(${isShown ? '0%' : '100%'}) scale(${
               isShown ? '1' : '0'
             })`,
           }}>

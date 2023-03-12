@@ -6,6 +6,7 @@ import { logOut } from '../../../../../features/userSlice'
 import { setSettings } from '../../../../../features/settingsSlice'
 import { DARK, LIGHT } from '../../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../../features/themeSlice'
+import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../imgs/Icons'
 
 export const SidebarBottom = () => {
   const dispatch = useDispatch()
@@ -31,34 +32,36 @@ export const SidebarBottom = () => {
           theme.theme === 'light' ? LIGHT.background : DARK.background
         }`,
       }}>
-      <img
+      <div
+        className='sidebar__bottom_logout bottom-btn'
         style={{
-          background: `${
-            theme.theme === 'light' ? LIGHT.background : DARK.background
-          }`,
+          backgroundImage: `url(${
+            theme.theme === 'light'
+              ? DEFUALT_ICONS.Logout_def
+              : NIGHT_ICONS.Logout_night
+          })`,
           boxShadow: `${
             theme.theme === 'light'
               ? `2px 0 10px ${LIGHT.shadow}`
               : `2px 0 10px ${DARK.shadow}`
           }`,
         }}
-        src='https://cdn-icons-png.flaticon.com/512/126/126467.png'
-        alt='logout'
         onClick={handleLogOut}
       />
-      <img
+      <div
+        className='sidebar__bottom_settings bottom-btn'
         style={{
-          background: `${
-            theme.theme === 'light' ? LIGHT.background : DARK.background
-          }`,
+          backgroundImage: `url(${
+            theme.theme === 'light'
+              ? DEFUALT_ICONS.Settings_def
+              : NIGHT_ICONS.Settings_night
+          })`,
           boxShadow: `${
             theme.theme === 'light'
               ? `2px 0 10px ${LIGHT.shadow}`
               : `2px 0 10px ${DARK.shadow}`
           }`,
         }}
-        src='https://cdn-icons-png.flaticon.com/512/900/900797.png'
-        alt='settings'
         onClick={handleSetSettings}
       />
     </div>

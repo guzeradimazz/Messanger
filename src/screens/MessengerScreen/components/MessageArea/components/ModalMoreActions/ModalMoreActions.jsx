@@ -10,6 +10,7 @@ import { selectTheme } from '../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
 import { Text } from '../../../../../../components/Text/Text'
 import { selectLanguage } from '../../../../../../features/languageSlice'
+import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
 export const ModalMoreActions = ({ isModalShown, setModalShown }) => {
   const dispatch = useDispatch()
@@ -41,17 +42,28 @@ export const ModalMoreActions = ({ isModalShown, setModalShown }) => {
           theme.theme === 'light' ? LIGHT.background : DARK.background
         }`,
       }}>
-      <img
-        src='https://cdn-icons-png.flaticon.com/512/2961/2961937.png'
-        alt='x'
+      <div
+        style={{
+          backgroundImage: `url(${
+            theme.theme === 'light'
+              ? DEFUALT_ICONS.Close_def
+              : NIGHT_ICONS.Close_night
+          })`,
+        }}
         className='close'
         onClick={() => setModalShown(prev => !prev)}
       />
       <ul>
         <li onClick={() => handleDeleteThread(currentThread.choosedThread.id)}>
-          <img
-            src='https://cdn-icons-png.flaticon.com/512/2782/2782988.png'
-            alt='icon'
+          <div
+            style={{
+              backgroundImage: `url(${
+                theme.theme === 'light'
+                  ? DEFUALT_ICONS.Trash_def
+                  : NIGHT_ICONS.Trash_night
+              })`,
+            }}
+            className='trash'
           />
           <Text label={language.language === 'en' ? 'delete' : 'удалить'} />
         </li>

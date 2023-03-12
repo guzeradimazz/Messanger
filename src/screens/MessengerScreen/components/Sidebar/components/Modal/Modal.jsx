@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
 import { selectLanguage } from '../../../../../../features/languageSlice'
+import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
 export const Modal = ({
   handleAddThread,
@@ -33,11 +34,16 @@ export const Modal = ({
         }`,
       }}>
       <div className='modal__container'>
-        <img
+        <div
           onClick={() => setModalShow(prev => !prev)}
           className='modal__container-close'
-          src='https://cdn-icons-png.flaticon.com/512/2961/2961937.png'
-          alt='close'
+          style={{
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Close_def
+                : NIGHT_ICONS.Close_night
+            })`,
+          }}
         />
         <input
           style={{

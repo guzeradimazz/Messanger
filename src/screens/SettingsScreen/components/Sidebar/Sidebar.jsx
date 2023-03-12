@@ -5,8 +5,9 @@ import { DARK, LIGHT } from '../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../features/themeSlice'
 import { Text } from '../../../../components/Text/Text'
 import { selectLanguage } from '../../../../features/languageSlice'
+import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../imgs/Icons'
 
-const Tab = ({ label, activeTab, onClick, icon, name }) => {
+const Tab = ({ label, activeTab, onClick, icon, name, width }) => {
   const theme = useSelector(selectTheme)
   return (
     <div
@@ -21,7 +22,7 @@ const Tab = ({ label, activeTab, onClick, icon, name }) => {
         }`,
       }}
       onClick={() => onClick(label)}>
-      <img src={icon} alt='icon' />
+      <img style={{ width: width }} src={icon} alt='icon' />
       <Text label={name} />
     </div>
   )
@@ -29,25 +30,32 @@ const Tab = ({ label, activeTab, onClick, icon, name }) => {
 
 export const Sidebar = ({ setChoice }) => {
   const language = useSelector(selectLanguage)
+  const theme = useSelector(selectTheme)
 
   const tabs = [
     {
       id: 'id13r2453g24',
       label: 'theme',
       name: language.language === 'en' ? 'theme' : 'тема',
-      icon: 'https://cdn-icons-png.flaticon.com/512/8818/8818235.png',
+      icon:
+        theme.theme === 'light'
+          ? DEFUALT_ICONS.Light_def
+          : NIGHT_ICONS.Night_night,
     },
     {
       id: 'id13r24dafvrbwe53g24',
       label: 'language',
       name: language.language === 'en' ? 'language' : 'язык',
-      icon: 'https://cdn-icons-png.flaticon.com/512/3898/3898840.png',
+      icon:
+        theme.theme === 'light'
+          ? DEFUALT_ICONS.Language_def
+          : NIGHT_ICONS.Language_night,
+      width: '25px',
     },
   ]
 
   const [activeTab, setActiveTab] = useState(tabs[0].label)
   const dispatch = useDispatch()
-  const theme = useSelector(selectTheme)
 
   const handleToMessanger = () => {
     dispatch(setSettings(false))
@@ -78,6 +86,7 @@ export const Sidebar = ({ setChoice }) => {
           activeTab={activeTab}
           label={i.label}
           name={i.name}
+          width={i.width}
           onClick={handleClick}
           icon={i.icon}
         />
@@ -91,7 +100,11 @@ export const Sidebar = ({ setChoice }) => {
           }`,
         }}>
         <img
-          src='https://cdn-icons-png.flaticon.com/512/130/130882.png'
+          src={
+            theme.theme === 'light'
+              ? DEFUALT_ICONS.Back_def
+              : NIGHT_ICONS.Back_night
+          }
           alt='icon'
         />
         <Text label={language.language === 'en' ? 'back' : 'назад'} />

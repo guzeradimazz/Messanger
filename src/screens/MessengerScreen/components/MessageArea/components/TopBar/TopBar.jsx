@@ -10,6 +10,7 @@ import { setMessages } from '../../../../../../features/currentMessages'
 import { Text } from '../../../../../../components/Text/Text'
 import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../../../features/themeSlice'
+import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
 export const TopBar = () => {
   const selectedThread = useSelector(selectChoosedThread)
@@ -31,14 +32,18 @@ export const TopBar = () => {
           theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
         }`,
       }}>
-      <img
+      <div
         style={{
           opacity: !selectedThread.isSelected ? '0' : '1',
           transition: 'all 0.3s',
           visibility: !selectedThread.isSelected ? 'hidden' : 'visible',
+          backgroundImage: `url(${
+            theme.theme === 'light'
+              ? DEFUALT_ICONS.Back_def
+              : NIGHT_ICONS.Back_night
+          })`,
         }}
-        src='https://cdn-icons-png.flaticon.com/512/130/130882.png'
-        alt='<'
+        className='back-icon'
         onClick={deleteSelectionThread}
       />
       <Text
@@ -49,14 +54,18 @@ export const TopBar = () => {
         }
         classname={'messagearea__top-headText'}
       />
-      <img
+      <div
         style={{
           opacity: !selectedThread.isSelected ? '0' : '1',
           transition: 'all 0.3s',
           visibility: !selectedThread.isSelected ? 'hidden' : 'visible',
+          backgroundImage: `url(${
+            theme.theme === 'light'
+              ? DEFUALT_ICONS.Dots_def
+              : NIGHT_ICONS.Dots_night
+          })`,
         }}
-        src='https://cdn-icons-png.flaticon.com/512/512/512142.png'
-        alt='...'
+        className='dots-icon'
         onClick={() => setModalShown(prev => !prev)}
       />
       <ModalMoreActions

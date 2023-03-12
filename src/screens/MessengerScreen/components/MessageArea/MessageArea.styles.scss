@@ -15,15 +15,16 @@
     width: 100%;
     padding: 10px;
     height: 10%;
+    z-index: 4;
 
-    form{
+    form {
       height: 100%;
       width: 100%;
       display: flex;
       justify-content: space-around;
       align-items: center;
 
-      button{
+      button {
         border: none;
         width: 150px;
         height: 50px;
@@ -44,30 +45,36 @@
         transform: scale(1.05);
       }
 
+      .file_upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+      }
       .custom-file-upload {
-        padding: 10px 10px;
-        background-color: #fff;
+        padding: 10px;
         border-radius: 10px;
         border: none;
         cursor: pointer;
         transition: all 0.3s ease;
-        img{
-          width: 20px;
-        }
-      }
-      
-      .custom-file-upload:hover {
-        transition: all 0.3s ease;
-        box-shadow: 0 0 12px #ea9c5c;
-        transform: translateY(-5px);
-        transform: scale(1.05);
+        width: 60px;
+        height: 60px;
+        content: '';
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 70%;
       }
 
-      
-      input[type="file"] {
+      .custom-file-upload:hover {
+        transition: all 0.3s ease;
+        background-image: url('../../../../imgs/Hover/clip.svg') !important;
+      }
+
+      input[type='file'] {
         display: none;
       }
-      
     }
 
     input {
@@ -81,17 +88,25 @@
       padding-left: 10px;
     }
 
-
-    .emoji{
+    .emoji {
       position: absolute;
       bottom: 70px;
       right: 20px;
     }
-    .emoji-btn{
+    .emoji-btn {
       width: 60px;
       height: 60px;
       padding: 10px;
       cursor: pointer;
+      transition: all 0.3s ease;
+      content: '';
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 70%;
+    }
+    .emoji-btn:hover {
+      transition: all 0.3s ease;
+      background-image: url('../../../../imgs/Hover/smile.svg') !important;
     }
   }
 
@@ -143,7 +158,7 @@
       justify-content: space-between;
       flex-direction: column;
     }
-    .neu_ball::before{
+    .neu_ball::before {
       content: '';
       border-radius: 50%;
       width: 44px;
