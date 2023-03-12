@@ -52,7 +52,21 @@
         justify-content: center;
         width: 60px;
         height: 60px;
+        position: relative;
       }
+
+      .file_upload_dot {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #50A3F3;
+        content: '';
+        top: 5px;
+        right: 40%;
+        box-shadow: 0 0 10px #50A3F3;
+      }
+
       .custom-file-upload {
         padding: 10px;
         border-radius: 10px;

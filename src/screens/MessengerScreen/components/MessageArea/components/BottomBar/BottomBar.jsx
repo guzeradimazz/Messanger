@@ -6,7 +6,13 @@ import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
 import { selectLanguage } from '../../../../../../features/languageSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
-export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
+export const BottomBar = ({
+  message,
+  setMessage,
+  sendMessage,
+  setFile,
+  file,
+}) => {
   const [isShown, setIsShown] = useState(false)
   const theme = useSelector(selectTheme)
   const language = useSelector(selectLanguage)
@@ -71,6 +77,7 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
                   : NIGHT_ICONS.Clip_night
               })`,
             }}></label>
+          {file && <div className='file_upload_dot' />}
           <input
             id='file-upload'
             accept='images/*'

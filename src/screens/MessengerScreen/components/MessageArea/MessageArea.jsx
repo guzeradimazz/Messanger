@@ -32,8 +32,6 @@ export const MessageArea = () => {
   const [message, setMessage] = useState('')
   const [file, setFile] = useState(null)
 
-  console.log(file)
-
   const sendMessage = async e => {
     e.preventDefault()
     if (user !== null && selectedThread !== null) {
@@ -153,6 +151,7 @@ export const MessageArea = () => {
         <div style={{ height: 'inherit' }}>
           <Messages />
           <BottomBar
+            file={file}
             setFile={setFile}
             message={message}
             setMessage={setMessage}
