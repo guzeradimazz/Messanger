@@ -18,7 +18,7 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
           theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
         }`,
       }}>
-      <form onSubmit={message ? e => sendMessage(e) : () => {}}>
+      <form onSubmit={e => sendMessage(e)}>
         <input
           style={{
             boxShadow: `${
@@ -50,11 +50,21 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
               : 'https://cdn-icons-png.flaticon.com/512/1933/1933704.png'
           }
         />
-        <input
-          type='file'
-          name='file'
-          onChange={e => setFile(e.target.files[0])}
-        />
+        <div>
+          <label htmlFor='file-upload' className='custom-file-upload'>
+            <img
+              src='https://cdn-icons-png.flaticon.com/512/9989/9989240.png'
+              alt='upload'
+            />
+          </label>
+          <input
+            id='file-upload'
+            accept='images/*'
+            type='file'
+            name='file'
+            onChange={e => setFile(e.target.files[0])}
+          />
+        </div>
         <div
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={() => setIsShown(false)}
@@ -70,9 +80,7 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
             onEmojiClick={item => setMessage(message + item.emoji)}
           />
         </div>
-        <button
-          onClick={message ? e => sendMessage(e) : () => {}}
-          type='submit'>
+        <button onClick={e => sendMessage(e)} type='submit'>
           {language.language === 'en' ? 'send' : 'отправить'}
         </button>
       </form>

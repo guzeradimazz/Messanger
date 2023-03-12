@@ -5,9 +5,11 @@ import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
 import { Text } from '../../../../../../components/Text/Text'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
+import { selectChoosedThread } from '../../../../../../features/choosedThreadSlice'
 
-export const Thread = ({ name, date, onClick }) => {
+export const Thread = ({ name, date, onClick, id }) => {
   const theme = useSelector(selectTheme)
+  const selectedThread = useSelector(selectChoosedThread)
   return (
     <div
       className='threads__item'
@@ -17,7 +19,13 @@ export const Thread = ({ name, date, onClick }) => {
           theme.theme === 'light' ? LIGHT.background : DARK.background
         }`,
         boxShadow: `${
-          theme.theme === 'light'
+          selectedThread.isSelected
+            ? selectedThread.choosedThread.id === id
+              ? '0px 0 10px #ea9c5c'
+              : theme.theme === 'light'
+              ? `0px 0 10px ${LIGHT.shadow}`
+              : `0px 0 10px ${DARK.shadow}`
+            : theme.theme === 'light'
             ? `0px 0 10px ${LIGHT.shadow}`
             : `0px 0 10px ${DARK.shadow}`
         }`,

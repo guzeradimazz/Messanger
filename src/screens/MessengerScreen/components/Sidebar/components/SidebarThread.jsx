@@ -13,7 +13,6 @@ export const SidebarThread = ({ threads }) => {
   }
 
   const theme = useSelector(selectTheme)
-
   return (
     <div
       className='threads'
@@ -27,6 +26,7 @@ export const SidebarThread = ({ threads }) => {
           theme={theme.theme}
           onClick={() => setChoosedThreadToMessages(i)}
           key={i.id}
+          id={i.id}
           name={i.name}
           date={i.date}
         />

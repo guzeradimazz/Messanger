@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectTheme, setTheme } from '../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../utils/Theme/theme'
 import { selectLanguage, setLanguage } from '../../../../features/languageSlice'
-import { Cube } from '../../../../components/Cube/Cube'
+import { Bubble } from '../../../../components/Bubble/Bubble'
 
 const ThemeModify = () => {
   const dispatch = useDispatch()
@@ -36,10 +36,10 @@ const LanguageModify = () => {
   )
 }
 
-const CubeWrapper = () => {
+const BubbleWrapper = () => {
   return (
-    <div className='cube'>
-      <Cube />
+    <div className='bubble'>
+      <Bubble />
     </div>
   )
 }
@@ -54,7 +54,7 @@ export const ToModify = ({ choice }) => {
           theme.theme === 'light' ? LIGHT.background : DARK.background
         }`,
       }}>
-      <CubeWrapper />
+      <BubbleWrapper />
       {choice === 'theme' ? <ThemeModify /> : null}
       {choice === 'language' ? <LanguageModify /> : null}
     </div>

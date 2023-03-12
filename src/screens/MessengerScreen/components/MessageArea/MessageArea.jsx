@@ -61,12 +61,11 @@ export const MessageArea = () => {
         () => {
           // Handle successful uploads
           console.log('Upload successful')
-
           // Get the download URL for the file
           getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
             addDoc(messagesRef, {
               userId: user.user.id,
-              message: message,
+              message: message | '',
               id: 'id' + Math.random().toString(16).slice(2),
               date: Timestamp.fromDate(new Date()).seconds,
               fileUrl: downloadURL,
@@ -93,14 +92,10 @@ export const MessageArea = () => {
         console.log(error)
       }
       setMessage('')
+      setFile(null)
     }
   }
-  // await addDoc(messagesRef, {
-  //   userId: user.user.id,
-  //   message: message,
-  //   id: 'id' + Math.random().toString(16).slice(2),
-  //   date: Timestamp.fromDate(new Date()).seconds,
-  // })
+
   const getMessages = async () => {
     if (selectedThread.isSelected) {
       const threadId = selectedThread.choosedThread.id

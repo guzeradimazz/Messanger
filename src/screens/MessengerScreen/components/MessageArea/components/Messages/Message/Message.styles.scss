@@ -26,6 +26,11 @@
     color: #c0c0c0;
   }
 
+  &__content_img{
+    width: 100px !important;
+    border-radius: 10px !important;
+  }
+
   &__wrapper {
     width: 100%;
     display: flex;

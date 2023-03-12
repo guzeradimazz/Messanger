@@ -6,7 +6,7 @@ import { selectTheme } from '../../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../../utils/Theme/theme'
 import { Text } from '../../../../../../../components/Text/Text'
 
-export const Message = ({ message, photo, isCurrentUser, name }) => {
+export const Message = ({ message, photo, isCurrentUser, name, picture }) => {
   const theme = useSelector(selectTheme)
   return (
     <div
@@ -27,9 +27,14 @@ export const Message = ({ message, photo, isCurrentUser, name }) => {
             theme.theme === 'light' ? LIGHT.background : DARK.background
           }`,
         }}>
-        <p className='message__displayName'>{name}</p>
         <img src={photo} alt='avatar' />
-        <Text label={message} />
+        <div className='message__content'>
+          {picture && (
+            <img src={picture} className='message__content_img' alt='picture' />
+          )}
+          {message === 0 ? null : <Text label={message} />}
+        </div>
+        <p className='message__displayName'>{name}</p>
       </div>
     </div>
   )

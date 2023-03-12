@@ -43,6 +43,30 @@
         transform: translateY(-5px);
         transform: scale(1.05);
       }
+
+      .custom-file-upload {
+        padding: 10px 10px;
+        background-color: #fff;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        img{
+          width: 20px;
+        }
+      }
+      
+      .custom-file-upload:hover {
+        transition: all 0.3s ease;
+        box-shadow: 0 0 12px #ea9c5c;
+        transform: translateY(-5px);
+        transform: scale(1.05);
+      }
+
+      
+      input[type="file"] {
+        display: none;
+      }
       
     }
 
@@ -56,6 +80,8 @@
       outline: none;
       padding-left: 10px;
     }
+
+
     .emoji{
       position: absolute;
       bottom: 70px;
