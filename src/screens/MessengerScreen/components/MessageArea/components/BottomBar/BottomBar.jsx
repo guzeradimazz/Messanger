@@ -5,7 +5,7 @@ import { selectTheme } from '../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
 import { selectLanguage } from '../../../../../../features/languageSlice'
 
-export const BottomBar = ({ message, setMessage, sendMessage }) => {
+export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
   const [isShown, setIsShown] = useState(false)
   const theme = useSelector(selectTheme)
   const language = useSelector(selectLanguage)
@@ -34,6 +34,7 @@ export const BottomBar = ({ message, setMessage, sendMessage }) => {
             }`,
           }}
           type='text'
+          name='message'
           value={message}
           onChange={e => setMessage(e.target.value)}
           placeholder={language.language === 'en' ? 'Message...' : 'Сообщение'}
@@ -48,6 +49,11 @@ export const BottomBar = ({ message, setMessage, sendMessage }) => {
               ? 'https://cdn-icons-png.flaticon.com/512/1933/1933691.png'
               : 'https://cdn-icons-png.flaticon.com/512/1933/1933704.png'
           }
+        />
+        <input
+          type='file'
+          name='file'
+          onChange={e => setFile(e.target.files[0])}
         />
         <div
           onMouseEnter={() => setIsShown(true)}

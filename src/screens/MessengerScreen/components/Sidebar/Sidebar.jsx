@@ -59,6 +59,7 @@ export const Sidebar = () => {
       }))
       threads.sort((a, b) => a.date - b.date)
       dispatch(setThreads(threads))
+      setCurrentThreads(threads)
     })
 
     return () => {
