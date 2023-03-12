@@ -1,5 +1,5 @@
 import EmojiPicker from 'emoji-picker-react'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
@@ -11,6 +11,20 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
   const theme = useSelector(selectTheme)
   const language = useSelector(selectLanguage)
 
+  const inputRef = useRef(null)
+  const [key, setKey] = useState(0)
+
+  useEffect(() => {
+    inputRef.current.focus()
+  }, [])
+
+  const handleFileChange = event => {
+    console.log(123)
+    const selectedFile = event.target.files[0]
+    setFile(selectedFile)
+    setKey(prev => prev + 1)
+  }
+
   return (
     <div
       className='messagearea__bottom'
@@ -19,8 +33,14 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
           theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
         }`,
       }}>
-      <form onSubmit={e => sendMessage(e)}>
+      <form
+        onSubmit={e => {
+          sendMessage(e)
+          inputRef.current.focus()
+        }}>
         <input
+          ref={inputRef}
+          autoFocus
           style={{
             boxShadow: `${
               theme.theme === 'light'
@@ -54,9 +74,10 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
           <input
             id='file-upload'
             accept='images/*'
+            key={key}
             type='file'
             name='file'
-            onChange={e => setFile(e.target.files[0])}
+            onChange={handleFileChange}
           />
         </div>
         <div
@@ -86,7 +107,23 @@ export const BottomBar = ({ message, setMessage, sendMessage, setFile }) => {
             onEmojiClick={item => setMessage(message + item.emoji)}
           />
         </div>
-        <button onClick={e => sendMessage(e)} type='submit'>
+        <button
+          onClick={e => {
+            sendMessage(e)
+            inputRef.current.focus()
+          }}
+          style={{
+            boxShadow: `0 0 7px ${
+              theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
+            }`,
+            background: `${
+              theme.theme === 'light' ? LIGHT.background : DARK.background
+            }`,
+            color: `${
+              theme.theme === 'light' ? DARK.background : LIGHT.background
+            }`,
+          }}
+          type='submit'>
           {language.language === 'en' ? 'send' : 'отправить'}
         </button>
       </form>

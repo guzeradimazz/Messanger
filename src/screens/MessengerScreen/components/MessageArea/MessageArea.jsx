@@ -32,67 +32,93 @@ export const MessageArea = () => {
   const [message, setMessage] = useState('')
   const [file, setFile] = useState(null)
 
+  console.log(file)
+
   const sendMessage = async e => {
     e.preventDefault()
     if (user !== null && selectedThread !== null) {
-      const storage = getStorage()
-      const storageRef = ref(storage, 'files/' + file.name)
-      const uploadTask = uploadBytesResumable(storageRef, file)
+      if (file) {
+        const storage = getStorage()
+        const storageRef = ref(storage, 'files/' + file.name)
+        const uploadTask = uploadBytesResumable(storageRef, file)
 
-      const threadId = selectedThread.choosedThread.id
-      const messagesRef = collection(
-        getFirestore(),
-        'threads',
-        threadId,
-        'messages'
-      )
+        const threadId = selectedThread.choosedThread.id
+        const messagesRef = collection(
+          getFirestore(),
+          'threads',
+          threadId,
+          'messages'
+        )
 
-      // Track the upload progress
-      uploadTask.on(
-        'state_changed',
-        snapshot => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          console.log('Upload is ' + progress + '% done')
-        },
-        error => {
-          console.error(error)
-        },
-        () => {
-          // Handle successful uploads
-          console.log('Upload successful')
-          // Get the download URL for the file
-          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-            addDoc(messagesRef, {
-              userId: user.user.id,
-              message: message | '',
-              id: 'id' + Math.random().toString(16).slice(2),
-              date: Timestamp.fromDate(new Date()).seconds,
-              fileUrl: downloadURL,
-              fileName: file.name,
-            }).then(docRef => {
-              // Update the message with the message ID
-              setDoc(
-                doc(
-                  getFirestore(),
-                  `threads/${threadId}/messages/${docRef.id}`
-                ),
-                {
-                  messageId: docRef.id,
-                },
-                { merge: true }
-              )
+        uploadTask.on(
+          'state_changed',
+          snapshot => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            console.log('Upload is ' + progress + '% done')
+          },
+          error => {
+            console.error(error)
+          },
+          () => {
+            // Handle successful uploads
+            console.log('Upload successful')
+            // Get the download URL for the file
+            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+              addDoc(messagesRef, {
+                userId: user.user.id,
+                message: message ? message : '',
+                id: 'id' + Math.random().toString(16).slice(2),
+                date: Timestamp.fromDate(new Date()).seconds,
+                fileUrl: downloadURL,
+                fileName: file.name,
+              }).then(docRef => {
+                // Update the message with the message ID
+                setDoc(
+                  doc(
+                    getFirestore(),
+                    `threads/${threadId}/messages/${docRef.id}`
+                  ),
+                  {
+                    messageId: docRef.id,
+                  },
+                  { merge: true }
+                )
+              })
             })
-          })
+          }
+        )
+        try {
+          getMessages()
+        } catch (error) {
+          console.log(error)
         }
-      )
-      try {
-        getMessages()
-      } catch (error) {
-        console.log(error)
+        setMessage('')
+        setFile(null)
+        return
+      } else {
+        if (message) {
+          const threadId = selectedThread.choosedThread.id
+          const messagesRef = collection(
+            getFirestore(),
+            'threads',
+            threadId,
+            'messages'
+          )
+          await addDoc(messagesRef, {
+            userId: user.user.id,
+            message: message,
+            id: 'id' + Math.random().toString(16).slice(2),
+            date: Timestamp.fromDate(new Date()).seconds,
+          })
+          try {
+            getMessages()
+          } catch (error) {
+            console.log(error)
+          }
+          setMessage('')
+        }
       }
-      setMessage('')
-      setFile(null)
     }
   }
 
