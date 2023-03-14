@@ -65,6 +65,7 @@ export const Messages = () => {
             photo={photo}
             picture={i.fileUrl}
             name={name}
+            audioURL={i.audioURL}
             isCurrentUser={user.user.id === i.userId ? true : false}
           />
         )

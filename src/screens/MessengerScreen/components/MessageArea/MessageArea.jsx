@@ -23,6 +23,7 @@ import {
   ref,
   uploadBytesResumable,
 } from 'firebase/storage'
+import { useRecorder } from '../../../../hooks/useRecorder'
 
 export const MessageArea = () => {
   const dispatch = useDispatch()
@@ -32,21 +33,89 @@ export const MessageArea = () => {
   const [message, setMessage] = useState('')
   const [file, setFile] = useState(null)
 
+  const [audioURL, isRecording, startRecording, stopRecording] = useRecorder()
+
+  const getMessagesAndFixStates = () => {
+    try {
+      getMessages()
+    } catch (error) {
+      console.log(error)
+    }
+    setMessage('')
+    setFile(null)
+  }
+
+  const sendAudioMessage = async () => {
+    const threadId = selectedThread.choosedThread.id
+    const messagesRef = collection(
+      getFirestore(),
+      'threads',
+      threadId,
+      'messages'
+    )
+    if (audioURL) {
+      console.log(audioURL)
+      const storage = getStorage()
+      const response = await fetch(audioURL)
+      const blob = await response.blob()
+      const storageRef = ref(
+        storage,
+        'audio/' + audioURL.substring(audioURL.length - 36)
+      )
+      const uploadTask = uploadBytesResumable(storageRef, blob)
+
+      uploadTask.on(
+        'state_changed',
+        snapshot => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log('Upload is ' + progress + '% done')
+        },
+        error => {
+          console.error(error)
+        },
+        () => {
+          console.log('Upload successful')
+          getDownloadURL(uploadTask.snapshot.ref).then(audioMessage => {
+            addDoc(messagesRef, {
+              userId: user.user.id,
+              message: message ? message : '',
+              id: 'id' + Math.random().toString(16).slice(2),
+              date: Timestamp.fromDate(new Date()).seconds,
+              audioURL: audioMessage,
+            }).then(docRef => {
+              setDoc(
+                doc(
+                  getFirestore(),
+                  `threads/${threadId}/messages/${docRef.id}`
+                ),
+                {
+                  messageId: docRef.id,
+                },
+                { merge: true }
+              )
+            })
+          })
+        }
+      )
+      getMessagesAndFixStates()
+    }
+  }
+
   const sendMessage = async e => {
     e.preventDefault()
+    const threadId = selectedThread.choosedThread.id
+    const messagesRef = collection(
+      getFirestore(),
+      'threads',
+      threadId,
+      'messages'
+    )
     if (user !== null && selectedThread !== null) {
       if (file) {
         const storage = getStorage()
         const storageRef = ref(storage, 'files/' + file.name)
         const uploadTask = uploadBytesResumable(storageRef, file)
-
-        const threadId = selectedThread.choosedThread.id
-        const messagesRef = collection(
-          getFirestore(),
-          'threads',
-          threadId,
-          'messages'
-        )
 
         uploadTask.on(
           'state_changed',
@@ -59,9 +128,7 @@ export const MessageArea = () => {
             console.error(error)
           },
           () => {
-            // Handle successful uploads
             console.log('Upload successful')
-            // Get the download URL for the file
             getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
               addDoc(messagesRef, {
                 userId: user.user.id,
@@ -71,7 +138,6 @@ export const MessageArea = () => {
                 fileUrl: downloadURL,
                 fileName: file.name,
               }).then(docRef => {
-                // Update the message with the message ID
                 setDoc(
                   doc(
                     getFirestore(),
@@ -86,35 +152,17 @@ export const MessageArea = () => {
             })
           }
         )
-        try {
-          getMessages()
-        } catch (error) {
-          console.log(error)
-        }
-        setMessage('')
-        setFile(null)
+        getMessagesAndFixStates()
         return
       } else {
         if (message) {
-          const threadId = selectedThread.choosedThread.id
-          const messagesRef = collection(
-            getFirestore(),
-            'threads',
-            threadId,
-            'messages'
-          )
           await addDoc(messagesRef, {
             userId: user.user.id,
             message: message,
             id: 'id' + Math.random().toString(16).slice(2),
             date: Timestamp.fromDate(new Date()).seconds,
           })
-          try {
-            getMessages()
-          } catch (error) {
-            console.log(error)
-          }
-          setMessage('')
+          getMessagesAndFixStates()
         }
       }
     }
@@ -151,6 +199,11 @@ export const MessageArea = () => {
         <div style={{ height: 'inherit' }}>
           <Messages />
           <BottomBar
+            isRecording={isRecording}
+            audioURL={audioURL}
+            sendAudioMessage={sendAudioMessage}
+            startRecording={startRecording}
+            stopRecording={stopRecording}
             file={file}
             setFile={setFile}
             message={message}

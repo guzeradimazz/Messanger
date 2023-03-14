@@ -31,6 +31,14 @@
     вы можете прописать нужные правила вручную. */
     "rules": {
         "prettier/prettier": "error", // Обязательно!! Подсвечивает ошибки из Prettier.
-        "react/prop-types": 0 // Отключаем правило проверки передаваемых типов.
+        "react/prop-types": 0,
+        "no-restricted-imports": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {
+              "alwaysTryTypes": true
+            }
+          }
     }
 }

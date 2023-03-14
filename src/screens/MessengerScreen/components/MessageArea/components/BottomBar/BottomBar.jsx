@@ -7,6 +7,11 @@ import { selectLanguage } from '../../../../../../features/languageSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
 export const BottomBar = ({
+  isRecording,
+  audioURL,
+  sendAudioMessage,
+  startRecording,
+  stopRecording,
   message,
   setMessage,
   sendMessage,
@@ -25,11 +30,23 @@ export const BottomBar = ({
   }, [])
 
   const handleFileChange = event => {
-    console.log(123)
     const selectedFile = event.target.files[0]
     setFile(selectedFile)
     setKey(prev => prev + 1)
   }
+
+  const handleAudioMessage = e => {
+    if (e.type === 'mousedown') startRecording()
+    if (e.type === 'mouseup') {
+      stopRecording()
+    } else return
+  }
+
+  useEffect(() => {
+    if (audioURL) {
+      sendAudioMessage()
+    }
+  }, [audioURL])
 
   return (
     <div
@@ -133,6 +150,22 @@ export const BottomBar = ({
           type='submit'>
           {language.language === 'en' ? 'send' : 'отправить'}
         </button>
+        <button
+          style={{
+            transform: `scale(${isRecording ? '1.2' : '1'})`,
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Micro_def
+                : NIGHT_ICONS.Micro_night
+            })`,
+            backgroundColor: `${
+              theme.theme === 'light' ? LIGHT.background : DARK.background
+            }`,
+          }}
+          className='audiobutton'
+          onMouseDown={handleAudioMessage}
+          onMouseUp={handleAudioMessage}
+        />
       </form>
     </div>
   )

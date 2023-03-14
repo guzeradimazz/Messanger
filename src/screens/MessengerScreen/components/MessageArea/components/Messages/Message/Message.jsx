@@ -6,7 +6,14 @@ import { selectTheme } from '../../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../../utils/Theme/theme'
 import { Text } from '../../../../../../../components/Text/Text'
 
-export const Message = ({ message, photo, isCurrentUser, name, picture }) => {
+export const Message = ({
+  message,
+  photo,
+  isCurrentUser,
+  name,
+  picture,
+  audioURL,
+}) => {
   const theme = useSelector(selectTheme)
   return (
     <div
@@ -32,6 +39,7 @@ export const Message = ({ message, photo, isCurrentUser, name, picture }) => {
           {picture && (
             <img src={picture} className='message__content_img' alt='picture' />
           )}
+          {audioURL && <audio src={audioURL} controls />}
           {message === 0 ? null : <Text label={message} />}
         </div>
         <p className='message__displayName'>{name}</p>

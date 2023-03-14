@@ -8,6 +8,7 @@ import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { getFirestore } from 'firebase/firestore'
 import { auth } from '../../firebase'
 import { Button } from '../../components/Button/Button'
+// import { IUser } from '../../types/User'
 
 export const LoginScreen = () => {
   const dispatch = useDispatch()
