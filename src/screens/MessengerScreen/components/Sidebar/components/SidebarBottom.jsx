@@ -7,6 +7,7 @@ import { setSettings } from '../../../../../features/settingsSlice'
 import { DARK, LIGHT } from '../../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../../features/themeSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../imgs/Icons'
+import { removeChoosedThread } from '../../../../../features/choosedThreadSlice'
 
 export const SidebarBottom = () => {
   const dispatch = useDispatch()
@@ -17,6 +18,7 @@ export const SidebarBottom = () => {
     localStorage.clear()
     signOut(auth).then(() => {
       dispatch(logOut(null))
+      dispatch(removeChoosedThread(null))
     })
   }
 

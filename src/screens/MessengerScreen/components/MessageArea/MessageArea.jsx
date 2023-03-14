@@ -170,7 +170,7 @@ export const MessageArea = () => {
 
   const getMessages = async () => {
     if (selectedThread.isSelected) {
-      const threadId = selectedThread.choosedThread.id
+      const threadId = selectedThread.choosedThread?.id
       const messagesRef = collection(
         getFirestore(),
         'threads',

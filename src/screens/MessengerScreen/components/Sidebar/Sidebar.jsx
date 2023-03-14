@@ -17,7 +17,6 @@ import {
 } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { Modal } from './components/Modal/Modal'
-import { selectChoosedThread } from '../../../../features/choosedThreadSlice'
 import { selectTheme } from '../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../utils/Theme/theme'
 
@@ -29,7 +28,6 @@ export const Sidebar = () => {
   const [currentThreads, setCurrentThreads] = useState([])
 
   const user = useSelector(selectUser)
-  const choosedThread = useSelector(selectChoosedThread)
   const theme = useSelector(selectTheme)
 
   const getThreads = async () => {
@@ -40,14 +38,10 @@ export const Sidebar = () => {
       id: i.id,
       ...i.data(),
     }))
-    const temp = threadsSnapshot.sort((a, b) => b.date - a.date)
-    dispatch(setThreads(temp))
-    setCurrentThreads(temp)
+    threadsSnapshot.sort((a, b) => b.date - a.date)
+    dispatch(setThreads(threadsSnapshot))
+    setCurrentThreads(threadsSnapshot)
   }
-
-  useEffect(() => {
-    getThreads()
-  }, [])
 
   useEffect(() => {
     const threadsRef = collection(db, 'threads')
@@ -66,10 +60,6 @@ export const Sidebar = () => {
       unsubscribe()
     }
   }, [])
-
-  useEffect(() => {
-    getThreads()
-  }, [choosedThread.isSelected])
 
   useEffect(() => {
     if (searchInput) {

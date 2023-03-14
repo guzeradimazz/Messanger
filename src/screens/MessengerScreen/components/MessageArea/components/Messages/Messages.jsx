@@ -6,11 +6,16 @@ import {
   setMessages,
 } from '../../../../../../features/currentMessages'
 import { Message } from './Message/Message'
-import { selectUsers } from '../../../../../../features/usersSlice'
+import { selectUsers, setUsers } from '../../../../../../features/usersSlice'
 import { query } from 'firebase/database'
 import { db } from '../../../../../../firebase'
 import { selectChoosedThread } from '../../../../../../features/choosedThreadSlice'
-import { collection, onSnapshot } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+} from 'firebase/firestore'
 
 export const Messages = () => {
   const user = useSelector(selectUser)
@@ -35,8 +40,21 @@ export const Messages = () => {
     return name
   }
 
+  const getUsers = async () => {
+    const firestore = getFirestore()
+    const usersCollectionRef = collection(firestore, 'users')
+    const usersSnapshot = await getDocs(usersCollectionRef)
+    const users = []
+    usersSnapshot.forEach(doc => {
+      const data = doc.data()
+      users.push(data)
+    })
+    dispatch(setUsers(users))
+  }
+
   useEffect(() => {
-    const threadId = selectedThread.choosedThread.id
+    getUsers()
+    const threadId = selectedThread.choosedThread?.id
     const messagesRef = collection(db, 'threads', threadId, 'messages')
     const messagesQuery = query(messagesRef)
     const unsubscribe = onSnapshot(messagesQuery, snapshot => {
