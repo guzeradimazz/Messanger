@@ -8,10 +8,14 @@ import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { getFirestore } from 'firebase/firestore'
 import { auth } from '../../firebase'
 import { Button } from '../../components/Button/Button'
-// import { IUser } from '../../types/User'
+import { selectTheme } from '../../features/themeSlice'
+import { useSelector } from 'react-redux'
+import { DARK, LIGHT } from '../../utils/Theme/theme'
+import { Text } from '../../components/Text/Text'
 
 export const LoginScreen = () => {
   const dispatch = useDispatch()
+  const theme = useSelector(selectTheme)
 
   const googleSignIn = async () => {
     const savedUser = localStorage.getItem('user')
@@ -67,9 +71,19 @@ export const LoginScreen = () => {
   }
 
   return (
-    <div className='login'>
-      <div className='login__modal'>
-        <h1>messenger</h1>
+    <div
+      className='login'
+      style={{
+        backgroundColor:
+          theme.theme === 'light' ? LIGHT.background : DARK.background,
+      }}>
+      <div
+        className='login__modal'
+        style={{
+          backgroundColor:
+            theme.theme === 'light' ? LIGHT.background : DARK.background,
+        }}>
+        <Text label={'messenger'} />
         <Button onClick={googleSignIn} text={'login'} />
       </div>
     </div>
