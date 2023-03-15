@@ -136,6 +136,7 @@ export const BottomBar = ({
             sendMessage(e)
             inputRef.current.focus()
           }}
+          className='sendbtn-web'
           style={{
             boxShadow: `0 0 7px ${
               theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
@@ -150,6 +151,26 @@ export const BottomBar = ({
           type='submit'>
           {language.language === 'en' ? 'send' : 'отправить'}
         </button>
+        <div
+          onClick={e => {
+            sendMessage(e)
+            inputRef.current.focus()
+          }}
+          style={{
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Send_def
+                : NIGHT_ICONS.Send_night
+            })`,
+            backgroundColor: `${
+              theme.theme === 'light' ? LIGHT.background : DARK.background
+            }`,
+            boxShadow: `0 0 7px ${
+              theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
+            }`,
+          }}
+          className='mobile-btn-send'
+        />
         <button
           style={{
             transform: `scale(${isRecording ? '1.2' : '1'})`,
