@@ -10,6 +10,7 @@ import Settings_def from './Default/settings.svg'
 import Smile_def from './Default/smile.svg'
 import Trash_def from './Default/trash.svg'
 import Micro_def from './Default/micro.svg'
+import Burger_def from './Default/Burger.svg'
 
 import Logout_night from './Night/logout.svg'
 import Back_night from './Night/back.svg'
@@ -23,6 +24,7 @@ import Settings_night from './Night/settings.svg'
 import Smile_night from './Night/smile.svg'
 import Trash_night from './Night/trash.svg'
 import Micro_night from './Night/micro.svg'
+import Burger_night from './Night/Burger.svg'
 
 export const DEFUALT_ICONS = {
   Logout_def,
@@ -37,6 +39,7 @@ export const DEFUALT_ICONS = {
   Smile_def,
   Trash_def,
   Micro_def,
+  Burger_def,
 }
 export const NIGHT_ICONS = {
   Logout_night,
@@ -51,4 +54,5 @@ export const NIGHT_ICONS = {
   Smile_night,
   Trash_night,
   Micro_night,
+  Burger_night,
 }

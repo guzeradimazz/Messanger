@@ -25,7 +25,7 @@ import {
 } from 'firebase/storage'
 import { useRecorder } from '../../../../hooks/useRecorder'
 
-export const MessageArea = () => {
+export const MessageArea = ({ isSidebarVisible, setSidebarVisibility }) => {
   const dispatch = useDispatch()
   const selectedThread = useSelector(selectChoosedThread)
   const user = useSelector(selectUser)
@@ -194,7 +194,10 @@ export const MessageArea = () => {
 
   return (
     <div className='messagearea'>
-      <TopBar />
+      <TopBar
+        isSidebarVisible={isSidebarVisible}
+        setSidebarVisibility={setSidebarVisibility}
+      />
       {selectedThread.isSelected ? (
         <div style={{ height: 'inherit' }}>
           <Messages />

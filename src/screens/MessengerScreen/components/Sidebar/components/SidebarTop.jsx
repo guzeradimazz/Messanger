@@ -4,6 +4,7 @@ import { DARK, LIGHT } from '../../../../../utils/Theme/theme'
 import { Text } from '../../../../../components/Text/Text'
 import { useSelector } from 'react-redux'
 import { selectLanguage } from '../../../../../features/languageSlice'
+import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../imgs/Icons'
 
 export const SidebarTop = ({
   theme,
@@ -11,6 +12,7 @@ export const SidebarTop = ({
   setModalShow,
   searchInput,
   setSearchInput,
+  setSidebarVisibility,
 }) => {
   const language = useSelector(selectLanguage)
   return (
@@ -22,6 +24,17 @@ export const SidebarTop = ({
       <div className='user-info'>
         <img src={user.photo} alt='user' />
         <Text label={user.displayName} />
+        <div
+          onClick={() => setSidebarVisibility(prev => !prev)}
+          className='sidebar__close-mobile'
+          style={{
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Close_def
+                : NIGHT_ICONS.Close_night
+            })`,
+          }}
+        />
       </div>
       <input
         style={{

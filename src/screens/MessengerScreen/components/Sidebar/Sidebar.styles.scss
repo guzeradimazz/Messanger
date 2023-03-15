@@ -4,6 +4,7 @@
   box-shadow: 2px 0 10px #eaeaea;
   position: relative;
   z-index: 1;
+  transition: all 0.3s ease;
   background-color: #fff;
 
   &__top {
@@ -74,3 +75,4 @@
     }
   }
 }
+

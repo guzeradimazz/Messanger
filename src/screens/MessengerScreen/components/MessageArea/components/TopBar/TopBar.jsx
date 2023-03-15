@@ -12,7 +12,7 @@ import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
-export const TopBar = () => {
+export const TopBar = ({ isSidebarVisible, setSidebarVisibility }) => {
   const selectedThread = useSelector(selectChoosedThread)
   const theme = useSelector(selectTheme)
   const dispatch = useDispatch()
@@ -46,6 +46,19 @@ export const TopBar = () => {
         className='back-icon'
         onClick={deleteSelectionThread}
       />
+      {isSidebarVisible ? null : (
+        <div
+          onClick={() => setSidebarVisibility(prev => !prev)}
+          className='sidebar__close-mobile'
+          style={{
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Burger_def
+                : NIGHT_ICONS.Burger_night
+            })`,
+          }}
+        />
+      )}
       <Text
         label={
           selectedThread.choosedThread

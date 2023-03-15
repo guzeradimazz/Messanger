@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
 import { selectLanguage } from '../../../../../../features/languageSlice'
+import './Plug.styles.scss'
 
 export const Plug = () => {
   const theme = useSelector(selectTheme)

@@ -20,7 +20,7 @@ import { Modal } from './components/Modal/Modal'
 import { selectTheme } from '../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../utils/Theme/theme'
 
-export const Sidebar = () => {
+export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
   const dispatch = useDispatch()
   const [isModalShow, setModalShow] = useState(true)
   const [threadName, setThreadName] = useState('')
@@ -96,15 +96,23 @@ export const Sidebar = () => {
             ? `2px 0 10px ${LIGHT.shadow}`
             : `2px 0 10px ${DARK.shadow}`
         }`,
+        transform: `translateX(${isSidebarVisible ? '0' : '-200%'})`,
+        opacity: `${isSidebarVisible ? '1' : '0'}`,
+        zIndex: isSidebarVisible ? '123' : '-21',
+        display: `${isSidebarVisible ? 'block' : 'none'}`,
       }}>
       <SidebarTop
+        setSidebarVisibility={setSidebarVisibility}
         theme={theme.theme}
         user={user.user}
         setModalShow={setModalShow}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
       />
-      <SidebarThread threads={currentThreads} />
+      <SidebarThread
+        threads={currentThreads}
+        setSidebarVisibility={setSidebarVisibility}
+      />
       <SidebarBottom />
       <Modal
         handleAddThread={handleAddThread}

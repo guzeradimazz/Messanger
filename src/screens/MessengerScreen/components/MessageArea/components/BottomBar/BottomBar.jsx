@@ -161,6 +161,9 @@ export const BottomBar = ({
             backgroundColor: `${
               theme.theme === 'light' ? LIGHT.background : DARK.background
             }`,
+            boxShadow: `0 0 7px ${
+              theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
+            }`,
           }}
           className='audiobutton'
           onMouseDown={handleAudioMessage}

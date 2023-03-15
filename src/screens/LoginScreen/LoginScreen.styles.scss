@@ -54,3 +54,11 @@
     transition: 0.3s ease;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .login__modal {
+    width: 70vw;
+    height: 70vh;
+    background-color: rgb(255 255 255 / 70%) !important;
+  }
+}
