@@ -10,6 +10,9 @@
 .mobile-btn-send {
   display: none;
 }
+.audiobuttonMobile{
+  display: none;
+}
 @media screen and (max-width: 425px) {
   .sidebar {
     flex: none;
@@ -46,14 +49,27 @@
     border-radius: 50%;
     display: block;
   }
-  .audiobutton {
+  .audiobuttonMobile {
+    display: block;
     width: 40px !important;
     height: 40px !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .audiobutton {
+    display: none;
+  }
+  .audiobutton:focus {
+    outline: none;
   }
   .file_upload {
     width: 40px !important;
     height: 40px !important;
-    .custom-file-upload{
+    .custom-file-upload {
       padding: 0;
       width: 40px !important;
       height: 40px !important;

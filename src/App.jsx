@@ -17,6 +17,17 @@ export const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(() => {
+        console.log('Разрешение на использование медиа получено')
+      })
+      .catch(error => {
+        console.error(
+          'Ошибка при запросе разрешения на использование медиа',
+          error
+        )
+      })
     try {
       const savedUser = localStorage.getItem('user')
       if (savedUser) {

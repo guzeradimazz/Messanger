@@ -42,6 +42,20 @@ export const BottomBar = ({
     } else return
   }
 
+  const handleAudioMessageMobile = () => {
+    if (isRecording) stopRecording()
+    else startRecording()
+  }
+
+  const handleSendMessage = e => {
+    sendMessage(e)
+    inputRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+    inputRef.current.focus()
+  }
+
   useEffect(() => {
     if (audioURL) {
       sendAudioMessage()
@@ -56,11 +70,7 @@ export const BottomBar = ({
           theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
         }`,
       }}>
-      <form
-        onSubmit={e => {
-          sendMessage(e)
-          inputRef.current.focus()
-        }}>
+      <form onSubmit={e => handleSendMessage(e)}>
         <input
           ref={inputRef}
           autoFocus
@@ -132,10 +142,7 @@ export const BottomBar = ({
           />
         </div>
         <button
-          onClick={e => {
-            sendMessage(e)
-            inputRef.current.focus()
-          }}
+          onClick={e => handleSendMessage(e)}
           className='sendbtn-web'
           style={{
             boxShadow: `0 0 7px ${
@@ -152,10 +159,7 @@ export const BottomBar = ({
           {language.language === 'en' ? 'send' : 'отправить'}
         </button>
         <div
-          onClick={e => {
-            sendMessage(e)
-            inputRef.current.focus()
-          }}
+          onClick={e => handleSendMessage(e)}
           style={{
             backgroundImage: `url(${
               theme.theme === 'light'
@@ -165,15 +169,12 @@ export const BottomBar = ({
             backgroundColor: `${
               theme.theme === 'light' ? LIGHT.background : DARK.background
             }`,
-            boxShadow: `0 0 7px ${
-              theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
-            }`,
           }}
           className='mobile-btn-send'
         />
-        <button
+        <div
           style={{
-            transform: `scale(${isRecording ? '1.2' : '1'})`,
+            transform: `scale(${isRecording ? '1.3' : '1'})`,
             backgroundImage: `url(${
               theme.theme === 'light'
                 ? DEFUALT_ICONS.Micro_def
@@ -189,6 +190,25 @@ export const BottomBar = ({
           className='audiobutton'
           onMouseDown={handleAudioMessage}
           onMouseUp={handleAudioMessage}
+        />
+
+        <div
+          style={{
+            transform: `scale(${isRecording ? '1.3' : '1'})`,
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Micro_def
+                : NIGHT_ICONS.Micro_night
+            })`,
+            backgroundColor: `${
+              theme.theme === 'light' ? LIGHT.background : DARK.background
+            }`,
+            boxShadow: `0 0 7px ${
+              theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
+            }`,
+          }}
+          className='audiobuttonMobile'
+          onClick={handleAudioMessageMobile}
         />
       </form>
     </div>

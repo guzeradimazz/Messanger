@@ -97,3 +97,29 @@
     }
   }
 }
+
+@media screen and (max-width: 425px) {
+  .settings__sidebar {
+    box-shadow: none !important;
+    z-index: 1 !important;
+  }
+  .settings__sidebar_item,
+  .settings__sidebar_item-active {
+    width: 87%;
+  }
+  .settings__modify .languageModify {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .languageModify .neumorph__button:nth-child(1) {
+    margin-bottom: 20px;
+  }
+  .settings__sidebar {
+    flex: 0.4;
+  }
+  .settings__modify{
+    flex: 0.6;
+  }
+}

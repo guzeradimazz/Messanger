@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import RecordRTC, { StereoAudioRecorder } from 'recordrtc'
 
 export const useRecorder = () => {
   const [audioURL, setAudioURL] = useState('')
@@ -7,38 +8,33 @@ export const useRecorder = () => {
 
   useEffect(() => {
     if (recorder === null) {
-      if (isRecording) {
-        requestRecorder().then(setRecorder, console.error)
-      }
+      if (isRecording) requestRecorder().then(setRecorder, console.error)
       return
     }
 
-    if (isRecording) {
-      recorder.start()
-    } else {
-      recorder.stop()
-    }
-
-    const handleData = e => {
-      setAudioURL(URL.createObjectURL(e.data))
-    }
-
-    recorder.addEventListener('dataavailable', handleData)
-    return () => recorder.removeEventListener('dataavailable', handleData)
+    if (isRecording) recorder.startRecording()
+    else
+      recorder.stopRecording(() => {
+        setAudioURL(recorder.toURL())
+        recorder.destroy()
+        setRecorder(null)
+      })
   }, [recorder, isRecording])
 
-  const startRecording = () => {
-    setIsRecording(true)
-  }
+  const startRecording = () => setIsRecording(true)
 
-  const stopRecording = () => {
-    setIsRecording(false)
-  }
+  const stopRecording = () => setIsRecording(false)
 
   return [audioURL, isRecording, startRecording, stopRecording]
 }
 
-async function requestRecorder() {
+const requestRecorder = async () => {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-  return new MediaRecorder(stream)
+  const recorder = RecordRTC(stream, {
+    type: 'audio',
+    recorderType: StereoAudioRecorder,
+    mimeType: 'audio/wav',
+  })
+
+  return recorder
 }

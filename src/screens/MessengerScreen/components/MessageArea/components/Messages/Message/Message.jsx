@@ -39,7 +39,11 @@ export const Message = ({
           {picture && (
             <img src={picture} className='message__content_img' alt='picture' />
           )}
-          {audioURL && <audio src={audioURL} controls />}
+          {audioURL && (
+            <audio controls onClick={e => e.target.play()}>
+              <source src={audioURL}></source>
+            </audio>
+          )}
           {message === 0 ? null : <Text label={message} />}
         </div>
         <p className='message__displayName'>{name}</p>

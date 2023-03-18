@@ -9,7 +9,7 @@ export const SidebarThread = ({ threads, setSidebarVisibility }) => {
   const dispatch = useDispatch()
 
   const setChoosedThreadToMessages = thread => {
-    if (window.screen.width === 425) setSidebarVisibility(false)
+    if (window.screen.width <= 500) setSidebarVisibility(false)
     dispatch(setChoosedThread(thread))
   }
 

@@ -45,7 +45,7 @@ export const Sidebar = ({ setChoice }) => {
     {
       id: 'id13r24dafvrbwe53g24',
       label: 'language',
-      name: language.language === 'en' ? 'language' : 'язык',
+      name: language.language === 'en' ? 'speech' : 'язык',
       icon:
         theme.theme === 'light'
           ? DEFUALT_ICONS.Language_def

@@ -12,3 +12,11 @@ button{
   width: 100vw;
   height: 100vh;
 }
+
+@media screen and (max-width: 425px) {
+  input[type="text"]{
+    box-shadow: 0 0 5px #c0c0c0;
+    -webkit-box-shadow: 0 0 5px #c0c0c0;
+    -moz-box-shadow: 0 0 5px #c0c0c0;
+  }
+}
