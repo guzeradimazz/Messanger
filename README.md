@@ -43,3 +43,12 @@ For example you can:
 
 
 
+
+
+
+
+# And finally some screens using night theme
+<img width="1440" alt="Снимок экрана 2023-03-21 в 01 36 56" src="https://user-images.githubusercontent.com/127554918/226480954-65aca42b-cacb-4590-a4cc-b6113a551972.png">
+
+<img width="1440" alt="222" src="https://user-images.githubusercontent.com/127554918/226481159-26743bd8-8e32-4cf1-a7fc-aaad5ea78e20.png">
+
