@@ -12,6 +12,8 @@ Stack of technologies -- React | Redux | JavaScript | Firebase | SCSS
 
 <img width="1435" alt="Снимок экрана 2023-03-21 в 01 25 52" src="https://user-images.githubusercontent.com/127554918/226478828-772927c4-430c-479d-8255-85f004a4e7ff.png">
 
+<img width="1440" alt="Снимок экрана 2023-03-21 в 01 44 58" src="https://user-images.githubusercontent.com/127554918/226482020-44c0456d-d402-496b-be62-10240b9b32ea.png">
+
 Next you can: 
 <ul> 
   <li> Create new chat</li>
