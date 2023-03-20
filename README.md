@@ -4,7 +4,11 @@
 Stack of technologies -- React | Redux | JavaScript | Firebase | SCSS
 <a href='https://guzeradimaz.github.io/Messanger/'>TRY MESSENGER</a>
 
+
+
 [SEE MOBILE VERSION](#mobile)
+
+
 
 # You are greeted by a login screen where you can log in to the messenger using your Google account
 
@@ -45,14 +49,19 @@ For example you can:
 
 <img width="1440" alt="Снимок экрана 2023-03-21 в 01 35 41" src="https://user-images.githubusercontent.com/127554918/226480676-bdb5b59c-2ed0-4a1c-9131-ec07b5d24ef4.png">
 
-# Mobile
-
-
-
-
-
 # And finally some screens using night theme
 <img width="1440" alt="Снимок экрана 2023-03-21 в 01 36 56" src="https://user-images.githubusercontent.com/127554918/226480954-65aca42b-cacb-4590-a4cc-b6113a551972.png">
 
 <img width="1440" alt="222" src="https://user-images.githubusercontent.com/127554918/226481159-26743bd8-8e32-4cf1-a7fc-aaad5ea78e20.png">
+
+
+
+# Mobile
+
+![photo_2023-03-21 01 54 42](https://user-images.githubusercontent.com/127554918/226483409-17b367ce-5e69-4360-ae05-4ae57558e81f.jpeg)
+![photo_2023-03-21 01 54 45](https://user-images.githubusercontent.com/127554918/226483412-278367de-9d21-4051-a975-c603cebf4d74.jpeg)
+![photo_2023-03-21 01 54 47](https://user-images.githubusercontent.com/127554918/226483414-37096499-c60b-4239-891d-252be229472e.jpeg)
+![photo_2023-03-21 01 54 50](https://user-images.githubusercontent.com/127554918/226483415-24d065fc-f634-438d-90c9-d25b35d75fce.jpeg)
+![photo_2023-03-21 01 54 51](https://user-images.githubusercontent.com/127554918/226483416-5c846255-be05-412f-9d70-766a5a0b2bc0.jpeg)
+
 
