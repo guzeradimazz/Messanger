@@ -45,6 +45,12 @@ export const MessageArea = ({ isSidebarVisible, setSidebarVisibility }) => {
     setFile(null)
   }
 
+  const checkSizeAudioBlob = async blob => {
+    const response = await fetch(blob)
+    const audioBlob = await response.blob()
+    return audioBlob.size / 1000 > 100
+  }
+
   const sendAudioMessage = async () => {
     const threadId = selectedThread.choosedThread.id
     const messagesRef = collection(
@@ -54,51 +60,54 @@ export const MessageArea = ({ isSidebarVisible, setSidebarVisibility }) => {
       'messages'
     )
     if (audioURL) {
-      console.log(audioURL)
-      const storage = getStorage()
-      const response = await fetch(audioURL)
-      const blob = await response.blob()
-      const storageRef = ref(
-        storage,
-        'audio/' + audioURL.substring(audioURL.length - 36)
-      )
-      const uploadTask = uploadBytesResumable(storageRef, blob)
-
-      uploadTask.on(
-        'state_changed',
-        snapshot => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          console.log('Upload is ' + progress + '% done')
-        },
-        error => {
-          console.error(error)
-        },
-        () => {
-          console.log('Upload successful')
-          getDownloadURL(uploadTask.snapshot.ref).then(audioMessage => {
-            addDoc(messagesRef, {
-              userId: user.user.id,
-              message: message ? message : '',
-              id: 'id' + Math.random().toString(16).slice(2),
-              date: Timestamp.fromDate(new Date()).seconds,
-              audioURL: audioMessage,
-            }).then(docRef => {
-              setDoc(
-                doc(
-                  getFirestore(),
-                  `threads/${threadId}/messages/${docRef.id}`
-                ),
-                {
-                  messageId: docRef.id,
-                },
-                { merge: true }
-              )
+      if (await checkSizeAudioBlob(audioURL)) {
+        const storage = getStorage()
+        const response = await fetch(audioURL)
+        const blob = await response.blob()
+        const storageRef = ref(
+          storage,
+          'audio/' + audioURL.substring(audioURL.length - 36)
+        )
+        const uploadTask = uploadBytesResumable(storageRef, blob)
+        uploadTask.on(
+          'state_changed',
+          snapshot => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            console.log('Upload is ' + progress + '% done')
+          },
+          error => {
+            console.error(error)
+          },
+          () => {
+            console.log('Upload successful')
+            getDownloadURL(uploadTask.snapshot.ref).then(audioMessage => {
+              addDoc(messagesRef, {
+                userId: user.user.id,
+                message: message ? message : '',
+                id: 'id' + Math.random().toString(16).slice(2),
+                date: Timestamp.fromDate(new Date()).seconds,
+                audioURL: audioMessage,
+              }).then(docRef => {
+                setDoc(
+                  doc(
+                    getFirestore(),
+                    `threads/${threadId}/messages/${docRef.id}`
+                  ),
+                  {
+                    messageId: docRef.id,
+                  },
+                  { merge: true }
+                )
+              })
             })
-          })
-        }
-      )
-      getMessagesAndFixStates()
+          }
+        )
+        getMessagesAndFixStates()
+      } else {
+        alert('Toooo short audio message dude...')
+        return
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Modal.styles.scss'
 import { Button } from '../../../../../../components/Button/Button'
 import { useSelector } from 'react-redux'
@@ -13,9 +13,20 @@ export const Modal = ({
   threadName,
   setThreadName,
   isModalShow,
+  setFile,
+  file,
 }) => {
   const theme = useSelector(selectTheme)
   const language = useSelector(selectLanguage)
+
+  const [key, setKey] = useState(0)
+
+  const handleFileChange = event => {
+    const selectedFile = event.target.files[0]
+    setFile(selectedFile)
+    setKey(prev => prev + 1)
+  }
+
   return (
     <div
       className='modal'
@@ -66,6 +77,27 @@ export const Modal = ({
             language.language === 'en' ? 'Type name of your chat' : 'Имя чата'
           }
         />
+        <div className='file_upload'>
+          <label
+            htmlFor='file-upload'
+            className='custom-file-upload'
+            style={{
+              backgroundImage: `url(${
+                theme.theme === 'light'
+                  ? DEFUALT_ICONS.Clip_def
+                  : NIGHT_ICONS.Clip_night
+              })`,
+            }}></label>
+          {file && <div className='file_upload_dot' />}
+          <input
+            id='file-upload'
+            accept='images/*'
+            key={key}
+            type='file'
+            name='file'
+            onChange={handleFileChange}
+          />
+        </div>
         <Button
           onClick={handleAddThread}
           text={language.language === 'en' ? 'Create chat' : 'Создать чат'}

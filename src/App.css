@@ -13,7 +13,7 @@ button{
   height: 100vh;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 505px) {
   input[type="text"]{
     box-shadow: 0 0 5px #c0c0c0;
     -webkit-box-shadow: 0 0 5px #c0c0c0;

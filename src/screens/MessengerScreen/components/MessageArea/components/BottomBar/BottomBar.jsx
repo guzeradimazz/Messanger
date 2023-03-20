@@ -1,10 +1,10 @@
-import EmojiPicker from 'emoji-picker-react'
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
 import { selectLanguage } from '../../../../../../features/languageSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
+import { EmojiModal } from '../../../../../../components/EmojiModal/EmojiModal'
 
 export const BottomBar = ({
   isRecording,
@@ -49,10 +49,6 @@ export const BottomBar = ({
 
   const handleSendMessage = e => {
     sendMessage(e)
-    inputRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    })
     inputRef.current.focus()
   }
 
@@ -126,21 +122,12 @@ export const BottomBar = ({
             })`,
           }}
         />
-        <div
+        <EmojiModal
+          onEmojiClick={item => setMessage(message + item.emoji)}
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={() => setIsShown(false)}
-          className='emoji'
-          style={{
-            opacity: isShown ? '1' : '0',
-            transition: 'all .3s ease',
-            transform: `translateX(${isShown ? '0%' : '100%'}) scale(${
-              isShown ? '1' : '0'
-            })`,
-          }}>
-          <EmojiPicker
-            onEmojiClick={item => setMessage(message + item.emoji)}
-          />
-        </div>
+          isShown={isShown}
+        />
         <button
           onClick={e => handleSendMessage(e)}
           className='sendbtn-web'

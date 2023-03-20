@@ -10,13 +10,16 @@
 .mobile-btn-send {
   display: none;
 }
-.audiobuttonMobile{
+.audiobuttonMobile {
   display: none;
 }
 @media screen and (max-width: 425px) {
   .sidebar {
     flex: none;
     width: 90%;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   .sidebar__close-mobile {
     display: block;
@@ -74,5 +77,26 @@
       width: 40px !important;
       height: 40px !important;
     }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  audio {
+    width: 240px !important;
+  }
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+@media screen and (max-width: 320px) {
+  audio {
+    width: 210px !important;
+  }
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }

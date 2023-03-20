@@ -50,6 +50,51 @@
     outline: none;
   }
 
+  .file_upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    position: relative;
+  }
+
+  .file_upload_dot {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #50a3f3;
+    content: '';
+    top: 5px;
+    right: 40%;
+    box-shadow: 0 0 10px #50a3f3;
+  }
+
+  .custom-file-upload {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 60px;
+    height: 60px;
+    content: '';
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+  }
+
+  .custom-file-upload:hover {
+    transition: all 0.3s ease;
+    background-image: url('../../../../../../imgs/Hover/clip.svg') !important;
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+
   button {
     border-radius: 10px;
     border: none;

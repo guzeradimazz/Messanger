@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { selectChoosedThread } from '../../../../../../features/choosedThreadSlice'
 
-export const Thread = ({ name, date, onClick, id }) => {
+export const Thread = ({ name, date, onClick, id, file }) => {
   const theme = useSelector(selectTheme)
   const selectedThread = useSelector(selectChoosedThread)
   return (
@@ -30,10 +30,7 @@ export const Thread = ({ name, date, onClick, id }) => {
             : `0px 0 10px ${DARK.shadow}`
         }`,
       }}>
-      <img
-        src='https://cdn-icons-png.flaticon.com/512/149/149071.png'
-        alt='avatar'
-      />
+      <img src={file ? file : 'https://picsum.photos/200/200'} alt='avatar' />
       <Text label={name} />
       <small>{parseTime(date)}</small>
     </div>

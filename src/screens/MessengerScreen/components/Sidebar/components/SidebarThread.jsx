@@ -30,6 +30,7 @@ export const SidebarThread = ({ threads, setSidebarVisibility }) => {
           id={i.id}
           name={i.name}
           date={i.date}
+          file={i.file}
         />
       ))}
     </div>

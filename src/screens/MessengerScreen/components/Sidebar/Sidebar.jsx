@@ -14,11 +14,19 @@ import {
   collection,
   Timestamp,
   onSnapshot,
+  getFirestore,
+  addDoc,
 } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { Modal } from './components/Modal/Modal'
 import { selectTheme } from '../../../../features/themeSlice'
 import { DARK, LIGHT } from '../../../../utils/Theme/theme'
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage'
 
 export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
   const dispatch = useDispatch()
@@ -26,6 +34,7 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
   const [threadName, setThreadName] = useState('')
   const [searchInput, setSearchInput] = useState('')
   const [currentThreads, setCurrentThreads] = useState([])
+  const [file, setFile] = useState(null)
 
   const user = useSelector(selectUser)
   const theme = useSelector(selectTheme)
@@ -71,7 +80,7 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
   }, [searchInput])
 
   const handleAddThread = async () => {
-    if (threadName) {
+    if (file === null && threadName) {
       const newThread = {
         name: threadName,
         userId: user.user.id,
@@ -81,6 +90,34 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
       getThreads()
       setModalShow(prev => !prev)
       setThreadName('')
+    } else if (file) {
+      const storage = getStorage()
+      const storageRef = ref(storage, 'filesthreads/' + file.name)
+      const uploadTask = uploadBytesResumable(storageRef, file)
+      const threadRef = collection(getFirestore(), 'threads')
+      uploadTask.on(
+        'state_changed',
+        snapshot => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log('Upload is ' + progress + '% done')
+        },
+        error => {
+          console.error(error)
+        },
+        () => {
+          console.log('Upload successful')
+          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+            addDoc(threadRef, {
+              name: threadName,
+              userId: user.user.id,
+              date: Timestamp.fromDate(new Date()).seconds,
+              file: downloadURL,
+            })
+          })
+        }
+      )
+      setFile(null)
     }
   }
 
@@ -99,7 +136,6 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
         transform: `translateX(${isSidebarVisible ? '0' : '-200%'})`,
         opacity: `${isSidebarVisible ? '1' : '0'}`,
         zIndex: isSidebarVisible ? '123' : '-21',
-        display: `${isSidebarVisible ? 'block' : 'none'}`,
       }}>
       <SidebarTop
         setSidebarVisibility={setSidebarVisibility}
@@ -115,6 +151,8 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
       />
       <SidebarBottom />
       <Modal
+        file={file}
+        setFile={setFile}
         handleAddThread={handleAddThread}
         setModalShow={setModalShow}
         threadName={threadName}
