@@ -1,8 +1,10 @@
-# Hi there! This is my Messanger web application!
+# Hi there! This is my Messanger web and mobile application!
 
 <br/>
 Stack of technologies -- React | Redux | JavaScript | Firebase | SCSS
 <a href='https://guzeradimaz.github.io/Messanger/'>TRY MESSENGER</a>
+
+[SEE MOBILE VERSION](#mobile)
 
 # You are greeted by a login screen where you can log in to the messenger using your Google account
 
@@ -43,7 +45,7 @@ For example you can:
 
 <img width="1440" alt="Снимок экрана 2023-03-21 в 01 35 41" src="https://user-images.githubusercontent.com/127554918/226480676-bdb5b59c-2ed0-4a1c-9131-ec07b5d24ef4.png">
 
-
+#mobile
 
 
 
