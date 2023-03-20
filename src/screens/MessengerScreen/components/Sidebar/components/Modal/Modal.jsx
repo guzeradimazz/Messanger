@@ -13,18 +13,18 @@ export const Modal = ({
   threadName,
   setThreadName,
   isModalShow,
-  setFile,
-  file,
+  setFileModal,
+  fileModal,
 }) => {
   const theme = useSelector(selectTheme)
   const language = useSelector(selectLanguage)
 
-  const [key, setKey] = useState(0)
+  const [key2, setKey2] = useState(0)
 
-  const handleFileChange = event => {
+  const handleFileChangeModal = event => {
     const selectedFile = event.target.files[0]
-    setFile(selectedFile)
-    setKey(prev => prev + 1)
+    setFileModal(selectedFile)
+    setKey2(prev => prev + 1)
   }
 
   return (
@@ -70,6 +70,7 @@ export const Modal = ({
               theme.theme === 'light' ? LIGHT.textColor : DARK.textColor
             }`,
           }}
+          maxLength={20}
           value={threadName}
           onChange={e => setThreadName(e.target.value)}
           type='text'
@@ -79,7 +80,7 @@ export const Modal = ({
         />
         <div className='file_upload'>
           <label
-            htmlFor='file-upload'
+            htmlFor='file-upload2'
             className='custom-file-upload'
             style={{
               backgroundImage: `url(${
@@ -88,14 +89,14 @@ export const Modal = ({
                   : NIGHT_ICONS.Clip_night
               })`,
             }}></label>
-          {file && <div className='file_upload_dot' />}
+          {fileModal && <div className='file_upload_dot' />}
           <input
-            id='file-upload'
+            id='file-upload2'
             accept='images/*'
-            key={key}
+            key={key2}
             type='file'
-            name='file'
-            onChange={handleFileChange}
+            name='fileModal'
+            onChange={handleFileChangeModal}
           />
         </div>
         <Button

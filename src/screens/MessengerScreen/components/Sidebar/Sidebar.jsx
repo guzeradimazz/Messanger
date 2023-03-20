@@ -34,7 +34,7 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
   const [threadName, setThreadName] = useState('')
   const [searchInput, setSearchInput] = useState('')
   const [currentThreads, setCurrentThreads] = useState([])
-  const [file, setFile] = useState(null)
+  const [fileModal, setFileModal] = useState(null)
 
   const user = useSelector(selectUser)
   const theme = useSelector(selectTheme)
@@ -80,7 +80,7 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
   }, [searchInput])
 
   const handleAddThread = async () => {
-    if (file === null && threadName) {
+    if (fileModal === null && threadName.trim()) {
       const newThread = {
         name: threadName,
         userId: user.user.id,
@@ -90,10 +90,10 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
       getThreads()
       setModalShow(prev => !prev)
       setThreadName('')
-    } else if (file) {
+    } else if (fileModal) {
       const storage = getStorage()
-      const storageRef = ref(storage, 'filesthreads/' + file.name)
-      const uploadTask = uploadBytesResumable(storageRef, file)
+      const storageRef = ref(storage, 'filesthreads/' + fileModal.name)
+      const uploadTask = uploadBytesResumable(storageRef, fileModal)
       const threadRef = collection(getFirestore(), 'threads')
       uploadTask.on(
         'state_changed',
@@ -117,7 +117,10 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
           })
         }
       )
-      setFile(null)
+      setFileModal(null)
+    } else {
+      alert('Please, write thread name!')
+      return
     }
   }
 
@@ -151,8 +154,8 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
       />
       <SidebarBottom />
       <Modal
-        file={file}
-        setFile={setFile}
+        fileModal={fileModal}
+        setFileModal={setFileModal}
         handleAddThread={handleAddThread}
         setModalShow={setModalShow}
         threadName={threadName}
