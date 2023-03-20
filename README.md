@@ -45,7 +45,7 @@ For example you can:
 
 <img width="1440" alt="Снимок экрана 2023-03-21 в 01 35 41" src="https://user-images.githubusercontent.com/127554918/226480676-bdb5b59c-2ed0-4a1c-9131-ec07b5d24ef4.png">
 
-#mobile
+# Mobile
 
 
 
