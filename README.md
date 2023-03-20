@@ -58,10 +58,12 @@ For example you can:
 
 # Mobile
 
-<img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483409-17b367ce-5e69-4360-ae05-4ae57558e81f.jpeg' width='300px'/>
-<img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483412-278367de-9d21-4051-a975-c603cebf4d74.jpeg' width='300px'/>
-<img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483414-37096499-c60b-4239-891d-252be229472e.jpeg' width='300px'/>
-<img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483415-24d065fc-f634-438d-90c9-d25b35d75fce.jpeg' width='300px'/>
-<img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483416-5c846255-be05-412f-9d70-766a5a0b2bc0.jpeg' width='300px'/>
+<div style={{display:'flex', flexWrap:'wrap'}}>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483409-17b367ce-5e69-4360-ae05-4ae57558e81f.jpeg' width='300px'/>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483412-278367de-9d21-4051-a975-c603cebf4d74.jpeg' width='300px'/>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483414-37096499-c60b-4239-891d-252be229472e.jpeg' width='300px'/>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483415-24d065fc-f634-438d-90c9-d25b35d75fce.jpeg' width='300px'/>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483416-5c846255-be05-412f-9d70-766a5a0b2bc0.jpeg' width='300px'/>
+</div>
 
 
