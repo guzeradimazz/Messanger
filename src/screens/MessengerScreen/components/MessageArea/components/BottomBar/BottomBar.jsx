@@ -25,10 +25,6 @@ export const BottomBar = ({
   const inputRef = useRef(null)
   const [key, setKey] = useState(0)
 
-  useEffect(() => {
-    inputRef.current.focus()
-  }, [])
-
   const handleFileChange = event => {
     const selectedFile = event.target.files[0]
     setFile(selectedFile)
@@ -49,7 +45,6 @@ export const BottomBar = ({
 
   const handleSendMessage = e => {
     sendMessage(e)
-    inputRef.current.focus()
   }
 
   useEffect(() => {
@@ -103,6 +98,7 @@ export const BottomBar = ({
           {file && <div className='file_upload_dot' />}
           <input
             id='file-upload'
+            capture='user'
             accept='images/*'
             key={key}
             type='file'

@@ -14,12 +14,18 @@
   display: none;
 }
 @media screen and (max-width: 425px) {
+  .sidebar__top input {
+    -webkit-box-shadow: 0px 0px 15px 10px rgba(192, 192, 192, 0.2) !important;
+    -moz-box-shadow: 0px 0px 15px 10px rgba(192, 192, 192, 0.2) !important;
+    box-shadow: 0px 0px 15px 10px rgba(192, 192, 192, 0.2) !important;
+  }
   .sidebar {
     flex: none;
     width: 90%;
     position: absolute;
     top: 0;
     left: 0;
+    overflow-y: hidden;
   }
   .sidebar__close-mobile {
     display: block;
@@ -77,6 +83,9 @@
       width: 40px !important;
       height: 40px !important;
     }
+  }
+  .message {
+    max-width: 100%;
   }
 }
 
