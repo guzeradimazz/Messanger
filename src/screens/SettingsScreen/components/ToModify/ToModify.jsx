@@ -47,7 +47,7 @@ const BubbleWrapper = () => {
 export const ToModify = ({ choice }) => {
   const theme = useSelector(selectTheme)
   return (
-    <div
+    <main
       className='settings__modify'
       style={{
         background: `${
@@ -57,6 +57,6 @@ export const ToModify = ({ choice }) => {
       <BubbleWrapper />
       {choice === 'theme' ? <ThemeModify /> : null}
       {choice === 'language' ? <LanguageModify /> : null}
-    </div>
+    </main>
   )
 }

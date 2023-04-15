@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button } from '../../../../../components/Button/Button'
-import { DARK, LIGHT } from '../../../../../utils/Theme/theme'
 import { Text } from '../../../../../components/Text/Text'
 import { useSelector } from 'react-redux'
 import { selectLanguage } from '../../../../../features/languageSlice'
@@ -16,20 +15,21 @@ export const SidebarTop = ({
 }) => {
   const language = useSelector(selectLanguage)
   return (
-    <div
-      className='sidebar__top'
-      style={{
-        background: `${theme === 'light' ? LIGHT.background : DARK.background}`,
-      }}>
+    <header
+      className={
+        theme === 'light'
+          ? 'sidebar__top light__background light__shadow'
+          : 'sidebar__top dark__background dark__shadow'
+      }>
       <div className='user-info'>
         <img src={user.photo} alt='user' />
-        <Text label={user.displayName} />
+        <Text type={'h3'} label={user.displayName} />
         <div
           onClick={() => setSidebarVisibility(prev => !prev)}
           className='sidebar__close-mobile'
           style={{
             backgroundImage: `url(${
-              theme.theme === 'light'
+              theme === 'light'
                 ? DEFUALT_ICONS.Close_def
                 : NIGHT_ICONS.Close_night
             })`,
@@ -37,17 +37,11 @@ export const SidebarTop = ({
         />
       </div>
       <input
-        style={{
-          boxShadow: `${
-            theme === 'light'
-              ? `0px 0 10px ${LIGHT.shadow}`
-              : `0px 0 10px ${DARK.shadow}`
-          }`,
-          background: `${
-            theme === 'light' ? LIGHT.background : DARK.background
-          }`,
-          color: `${theme === 'light' ? LIGHT.textColor : DARK.textColor}`,
-        }}
+        className={
+          theme === 'light'
+            ? 'light__color light__background light__shadow'
+            : 'dark__color dark__background dark__shadow'
+        }
         value={searchInput}
         onChange={e => setSearchInput(e.target.value)}
         type='text'
@@ -57,6 +51,6 @@ export const SidebarTop = ({
         onClick={() => setModalShow(prev => !prev)}
         text={language.language === 'en' ? 'create chat' : 'создать чат'}
       />
-    </div>
+    </header>
   )
 }

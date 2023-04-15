@@ -11,13 +11,14 @@ export const Thread = ({ name, date, onClick, id, file }) => {
   const theme = useSelector(selectTheme)
   const selectedThread = useSelector(selectChoosedThread)
   return (
-    <div
-      className='threads__item'
+    <li
       onClick={onClick}
+      className={
+        theme.theme === 'light'
+          ? 'threads__item light__background light__shadow'
+          : 'threads__item dark__background dark__shadow'
+      }
       style={{
-        background: `${
-          theme.theme === 'light' ? LIGHT.background : DARK.background
-        }`,
         boxShadow: `${
           selectedThread.isSelected
             ? selectedThread.choosedThread.id === id
@@ -31,8 +32,8 @@ export const Thread = ({ name, date, onClick, id, file }) => {
         }`,
       }}>
       <img src={file ? file : 'https://picsum.photos/200/200'} alt='avatar' />
-      <Text label={name} />
+      <Text type={'p'} label={name} />
       <small>{parseTime(date)}</small>
-    </div>
+    </li>
   )
 }

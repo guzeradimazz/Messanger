@@ -4,7 +4,6 @@ import { auth } from '../../../../../firebase'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../../../../../features/userSlice'
 import { setSettings } from '../../../../../features/settingsSlice'
-import { DARK, LIGHT } from '../../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../../features/themeSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../imgs/Icons'
 import { removeChoosedThread } from '../../../../../features/choosedThreadSlice'
@@ -27,45 +26,42 @@ export const SidebarBottom = () => {
   }
 
   return (
-    <div
-      className='sidebar__bottom'
-      style={{
-        background: `${
-          theme.theme === 'light' ? LIGHT.background : DARK.background
-        }`,
-      }}>
+    <footer
+      className={
+        theme.theme === 'light'
+          ? 'sidebar__bottom light__background light__shadow'
+          : 'sidebar__bottom dark__background dark__shadow'
+      }>
       <div
-        className='sidebar__bottom_logout bottom-btn'
+        className={
+          theme.theme === 'light'
+            ? 'sidebar__bottom_logout bottom-btn light__shadow'
+            : 'sidebar__bottom_logout bottom-btn dark__shadow'
+        }
         style={{
           backgroundImage: `url(${
             theme.theme === 'light'
               ? DEFUALT_ICONS.Logout_def
               : NIGHT_ICONS.Logout_night
           })`,
-          boxShadow: `${
-            theme.theme === 'light'
-              ? `2px 0 10px ${LIGHT.shadow}`
-              : `2px 0 10px ${DARK.shadow}`
-          }`,
         }}
         onClick={handleLogOut}
       />
       <div
-        className='sidebar__bottom_settings bottom-btn'
+        className={
+          theme.theme === 'light'
+            ? 'sidebar__bottom_settings bottom-btn light__shadow'
+            : 'sidebar__bottom_settings bottom-btn dark__shadow'
+        }
         style={{
           backgroundImage: `url(${
             theme.theme === 'light'
               ? DEFUALT_ICONS.Settings_def
               : NIGHT_ICONS.Settings_night
           })`,
-          boxShadow: `${
-            theme.theme === 'light'
-              ? `2px 0 10px ${LIGHT.shadow}`
-              : `2px 0 10px ${DARK.shadow}`
-          }`,
         }}
         onClick={handleSetSettings}
       />
-    </div>
+    </footer>
   )
 }

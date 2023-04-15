@@ -83,7 +83,7 @@ export const LoginScreen = () => {
           backgroundColor:
             theme.theme === 'light' ? LIGHT.background : DARK.background,
         }}>
-        <Text label={'messenger'} />
+        <Text type={'h1'} label={'messenger'} />
         <Button onClick={googleSignIn} text={'login'} />
       </div>
     </div>

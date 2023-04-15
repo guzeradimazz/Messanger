@@ -208,7 +208,7 @@ export const MessageArea = ({ isSidebarVisible, setSidebarVisibility }) => {
         setSidebarVisibility={setSidebarVisibility}
       />
       {selectedThread.isSelected ? (
-        <div style={{ height: 'inherit' }}>
+        <main style={{ height: 'inherit' }}>
           <Messages />
           <BottomBar
             isRecording={isRecording}
@@ -222,7 +222,7 @@ export const MessageArea = ({ isSidebarVisible, setSidebarVisibility }) => {
             setMessage={setMessage}
             sendMessage={sendMessage}
           />
-        </div>
+        </main>
       ) : (
         <Plug />
       )}

@@ -1,4 +1,5 @@
 import './App.css'
+import './utils/Theme.styles.scss'
 import { useSelector } from 'react-redux'
 import { selectUser, setUser } from './features/userSlice'
 import { Messenger } from './screens/MessengerScreen/Messenger'

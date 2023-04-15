@@ -2,7 +2,6 @@ import React from 'react'
 import { Thread } from './Thread/Thread'
 import { useDispatch, useSelector } from 'react-redux'
 import { setChoosedThread } from '../../../../../features/choosedThreadSlice'
-import { DARK, LIGHT } from '../../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../../features/themeSlice'
 
 export const SidebarThread = ({ threads, setSidebarVisibility }) => {
@@ -15,13 +14,12 @@ export const SidebarThread = ({ threads, setSidebarVisibility }) => {
 
   const theme = useSelector(selectTheme)
   return (
-    <div
-      className='threads'
-      style={{
-        background: `${
-          theme.theme === 'light' ? LIGHT.background : DARK.background
-        }`,
-      }}>
+    <ul
+      className={
+        theme.theme === 'light'
+          ? 'threads light__background light__shadow'
+          : 'threads dark__background dark__shadow'
+      }>
       {threads.map(i => (
         <Thread
           theme={theme.theme}
@@ -33,6 +31,6 @@ export const SidebarThread = ({ threads, setSidebarVisibility }) => {
           file={i.file}
         />
       ))}
-    </div>
+    </ul>
   )
 }

@@ -4,7 +4,6 @@ import { MessageArea } from './components/MessageArea/MessageArea'
 import { Sidebar } from './components/Sidebar/Sidebar'
 import './Messenger.styles.scss'
 import { selectTheme } from '../../features/themeSlice'
-import { DARK, LIGHT } from '../../utils/Theme/theme'
 
 export const Messenger = () => {
   const theme = useSelector(selectTheme)
@@ -12,12 +11,11 @@ export const Messenger = () => {
   const [isSidebarVisible, setSidebarVisibility] = useState(true)
   return (
     <div
-      className='messenger'
-      style={{
-        background: `${
-          theme.theme === 'light' ? LIGHT.background : DARK.background
-        }`,
-      }}>
+      className={
+        theme.theme === 'light'
+          ? 'messenger light__background'
+          : `messenger dark__background`
+      }>
       <Sidebar
         isSidebarVisible={isSidebarVisible}
         setSidebarVisibility={setSidebarVisibility}

@@ -20,7 +20,6 @@ import {
 import { db } from '../../../../firebase'
 import { Modal } from './components/Modal/Modal'
 import { selectTheme } from '../../../../features/themeSlice'
-import { DARK, LIGHT } from '../../../../utils/Theme/theme'
 import {
   getDownloadURL,
   getStorage,
@@ -125,17 +124,13 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
   }
 
   return (
-    <div
-      className='sidebar'
+    <section
+      className={
+        theme.theme === 'light'
+          ? 'sidebar light__background light__shadow'
+          : 'sidebar dark__background dark__shadow'
+      }
       style={{
-        background: `${
-          theme.theme === 'light' ? LIGHT.background : DARK.background
-        }`,
-        boxShadow: `${
-          theme.theme === 'light'
-            ? `2px 0 10px ${LIGHT.shadow}`
-            : `2px 0 10px ${DARK.shadow}`
-        }`,
         transform: `translateX(${isSidebarVisible ? '0' : '-200%'})`,
         opacity: `${isSidebarVisible ? '1' : '0'}`,
         zIndex: isSidebarVisible ? '123' : '-21',
@@ -162,6 +157,6 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
         setThreadName={setThreadName}
         isModalShow={isModalShow}
       />
-    </div>
+    </section>
   )
 }

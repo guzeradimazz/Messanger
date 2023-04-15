@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
-import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
 import { selectLanguage } from '../../../../../../features/languageSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 import { EmojiModal } from '../../../../../../components/EmojiModal/EmojiModal'
@@ -54,40 +53,35 @@ export const BottomBar = ({
   }, [audioURL])
 
   return (
-    <div
-      className='messagearea__bottom'
-      style={{
-        boxShadow: `0 -2px 6px ${
-          theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
-        }`,
-      }}>
+    <footer
+      className={
+        theme.theme === 'light'
+          ? 'messagearea__bottom light__background light__shadow'
+          : 'messagearea__bottom dark__background dark__shadow'
+      }>
       <form onSubmit={e => handleSendMessage(e)}>
         <input
           ref={inputRef}
           autoFocus
-          style={{
-            boxShadow: `${
-              theme.theme === 'light'
-                ? `0px 0 10px ${LIGHT.shadow}`
-                : `0px 0 10px ${DARK.shadow}`
-            }`,
-            background: `${
-              theme.theme === 'light' ? LIGHT.background : DARK.background
-            }`,
-            color: `${
-              theme.theme === 'light' ? LIGHT.textColor : DARK.textColor
-            }`,
-          }}
+          className={
+            theme.theme === 'light'
+              ? 'light__color light__background light__shadow'
+              : 'dark__color dark__background dark__shadow'
+          }
           type='text'
           name='message'
           value={message}
           onChange={e => setMessage(e.target.value)}
           placeholder={language.language === 'en' ? 'Message...' : 'Сообщение'}
         />
-        <div className='file_upload'>
+        <button className='file_upload'>
           <label
             htmlFor='file-upload'
-            className='custom-file-upload'
+            className={
+              theme.theme === 'light'
+                ? 'custom-file-upload light__background '
+                : 'custom-file-upload dark__background '
+            }
             style={{
               backgroundImage: `url(${
                 theme.theme === 'light'
@@ -98,18 +92,21 @@ export const BottomBar = ({
           {file && <div className='file_upload_dot' />}
           <input
             id='file-upload'
-            capture='user'
             accept='images/*'
             key={key}
             type='file'
             name='file'
             onChange={handleFileChange}
           />
-        </div>
-        <div
+        </button>
+        <button
           onMouseEnter={() => setIsShown(prev => !prev)}
           onMouseLeave={() => setIsShown(prev => !prev)}
-          className='emoji-btn'
+          className={
+            theme.theme === 'light'
+              ? 'emoji-btn light__background '
+              : 'emoji-btn dark__background '
+          }
           style={{
             backgroundImage: `url(${
               theme.theme === 'light'
@@ -126,36 +123,36 @@ export const BottomBar = ({
         />
         <button
           onClick={e => handleSendMessage(e)}
-          className='sendbtn-web'
-          style={{
-            boxShadow: `0 0 7px ${
-              theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
-            }`,
-            background: `${
-              theme.theme === 'light' ? LIGHT.background : DARK.background
-            }`,
-            color: `${
-              theme.theme === 'light' ? DARK.background : LIGHT.background
-            }`,
-          }}
+          className={
+            theme.theme === 'light'
+              ? 'sendbtn-web light__color light__background light__shadow'
+              : 'sendbtn-web dark__color dark__background dark__shadow'
+          }
           type='submit'>
           {language.language === 'en' ? 'send' : 'отправить'}
         </button>
-        <div
+        <button
           onClick={e => handleSendMessage(e)}
+          className={
+            theme.theme === 'light'
+              ? 'mobile-btn-send  light__background '
+              : 'mobile-btn-send  dark__background '
+          }
           style={{
             backgroundImage: `url(${
               theme.theme === 'light'
                 ? DEFUALT_ICONS.Send_def
                 : NIGHT_ICONS.Send_night
             })`,
-            backgroundColor: `${
-              theme.theme === 'light' ? LIGHT.background : DARK.background
-            }`,
           }}
-          className='mobile-btn-send'
         />
-        <div
+        <button
+          tabIndex={3}
+          className={
+            theme.theme === 'light'
+              ? 'audiobutton  light__background light__shadow'
+              : 'audiobutton  dark__background dark__shadow'
+          }
           style={{
             transform: `scale(${isRecording ? '1.3' : '1'})`,
             backgroundImage: `url(${
@@ -163,19 +160,17 @@ export const BottomBar = ({
                 ? DEFUALT_ICONS.Micro_def
                 : NIGHT_ICONS.Micro_night
             })`,
-            backgroundColor: `${
-              theme.theme === 'light' ? LIGHT.background : DARK.background
-            }`,
-            boxShadow: `0 0 7px ${
-              theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
-            }`,
           }}
-          className='audiobutton'
           onMouseDown={handleAudioMessage}
           onMouseUp={handleAudioMessage}
         />
 
-        <div
+        <button
+          className={
+            theme.theme === 'light'
+              ? 'audiobuttonMobile  light__background light__shadow'
+              : 'audiobuttonMobile  dark__background dark__shadow'
+          }
           style={{
             transform: `scale(${isRecording ? '1.3' : '1'})`,
             backgroundImage: `url(${
@@ -183,17 +178,10 @@ export const BottomBar = ({
                 ? DEFUALT_ICONS.Micro_def
                 : NIGHT_ICONS.Micro_night
             })`,
-            backgroundColor: `${
-              theme.theme === 'light' ? LIGHT.background : DARK.background
-            }`,
-            boxShadow: `0 0 7px ${
-              theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
-            }`,
           }}
-          className='audiobuttonMobile'
           onClick={handleAudioMessageMobile}
         />
       </form>
-    </div>
+    </footer>
   )
 }

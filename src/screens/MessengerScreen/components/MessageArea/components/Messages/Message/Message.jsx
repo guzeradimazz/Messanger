@@ -3,7 +3,6 @@ import './Message.styles.scss'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../../features/themeSlice'
 
-import { LIGHT, DARK } from '../../../../../../../utils/Theme/theme'
 import { Text } from '../../../../../../../components/Text/Text'
 
 export const Message = ({
@@ -22,17 +21,13 @@ export const Message = ({
         flexDirection: isCurrentUser ? 'row-reverse' : 'row',
       }}>
       <div
-        className='message'
+        className={
+          theme.theme === 'light'
+            ? 'message light__background light__shadow'
+            : 'message dark__background dark__shadow'
+        }
         style={{
           flexDirection: isCurrentUser ? 'row-reverse' : 'row',
-          boxShadow: `${
-            theme.theme === 'light'
-              ? `0px 0 10px ${LIGHT.shadow}`
-              : `0px 0 10px ${DARK.shadow}`
-          }`,
-          background: `${
-            theme.theme === 'light' ? LIGHT.background : DARK.background
-          }`,
         }}>
         <img src={photo} alt='avatar' />
         <div className='message__content'>
@@ -44,7 +39,7 @@ export const Message = ({
               <source src={audioURL}></source>
             </audio>
           )}
-          {message === 0 ? null : <Text label={message} />}
+          {message === 0 ? null : <Text type={'p'} label={message} />}
         </div>
         <p className='message__displayName'>{name}</p>
       </div>

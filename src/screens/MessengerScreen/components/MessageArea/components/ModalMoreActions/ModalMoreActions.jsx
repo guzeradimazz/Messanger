@@ -7,7 +7,6 @@ import {
   selectChoosedThread,
 } from '../../../../../../features/choosedThreadSlice'
 import { selectTheme } from '../../../../../../features/themeSlice'
-import { LIGHT, DARK } from '../../../../../../utils/Theme/theme'
 import { Text } from '../../../../../../components/Text/Text'
 import { selectLanguage } from '../../../../../../features/languageSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
@@ -28,19 +27,15 @@ export const ModalMoreActions = ({ isModalShown, setModalShown }) => {
   const language = useSelector(selectLanguage)
   return (
     <div
-      className='modal-moreactions'
+      className={
+        theme.theme === 'light'
+          ? 'modal-moreactions light__background '
+          : 'modal-moreactions dark__background '
+      }
       style={{
         opacity: isModalShown ? '1' : '0',
         visibility: isModalShown ? 'visible' : 'hidden',
         transform: `translateX(${isModalShown ? '0%' : '200%'})`,
-        boxShadow: `${
-          theme.theme === 'light'
-            ? `0px 0 10px ${LIGHT.shadow}`
-            : `0px 0 10px ${DARK.shadow}`
-        }`,
-        background: `${
-          theme.theme === 'light' ? LIGHT.background : DARK.background
-        }`,
       }}>
       <div
         style={{
@@ -65,7 +60,10 @@ export const ModalMoreActions = ({ isModalShown, setModalShown }) => {
             }}
             className='trash'
           />
-          <Text label={language.language === 'en' ? 'delete' : 'удалить'} />
+          <Text
+            type={'p'}
+            label={language.language === 'en' ? 'delete' : 'удалить'}
+          />
         </li>
       </ul>
     </div>

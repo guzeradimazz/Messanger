@@ -3,7 +3,6 @@ import './Modal.styles.scss'
 import { Button } from '../../../../../../components/Button/Button'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../../../../features/themeSlice'
-import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
 import { selectLanguage } from '../../../../../../features/languageSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
@@ -29,23 +28,20 @@ export const Modal = ({
 
   return (
     <div
-      className='modal'
+      className={
+        theme.theme === 'light'
+          ? 'modal light__background light__shadow'
+          : 'modal dark__background dark__shadow'
+      }
       style={{
         opacity: isModalShow ? '0' : '1',
         transition: 'all 0.3s',
         visibility: isModalShow ? 'hidden' : 'visible',
         transform: `translateY(${!isModalShow ? '0%' : '200%'})`,
-        background: `${
-          theme.theme === 'light' ? LIGHT.background : DARK.background
-        }`,
-        boxShadow: `${
-          theme.theme === 'light'
-            ? `2px 0 10px ${LIGHT.shadow}`
-            : `2px 0 10px ${DARK.shadow}`
-        }`,
       }}>
       <div className='modal__container'>
         <div
+          tabIndex={2}
           onClick={() => setModalShow(prev => !prev)}
           className='modal__container-close'
           style={{
@@ -57,19 +53,11 @@ export const Modal = ({
           }}
         />
         <input
-          style={{
-            boxShadow: `${
-              theme.theme === 'light'
-                ? `0px 0 10px ${LIGHT.shadow}`
-                : `0px 0 10px ${DARK.shadow}`
-            }`,
-            background: `${
-              theme.theme === 'light' ? LIGHT.background : DARK.background
-            }`,
-            color: `${
-              theme.theme === 'light' ? LIGHT.textColor : DARK.textColor
-            }`,
-          }}
+          className={
+            theme.theme === 'light'
+              ? 'light__color light__background light__shadow'
+              : 'dark__color dark__background dark__shadow'
+          }
           maxLength={20}
           value={threadName}
           onChange={e => setThreadName(e.target.value)}
@@ -78,10 +66,14 @@ export const Modal = ({
             language.language === 'en' ? 'Type name of your chat' : 'Имя чата'
           }
         />
-        <div className='file_upload'>
+        <button className='file_upload'>
           <label
             htmlFor='file-upload2'
-            className='custom-file-upload'
+            className={
+              theme.theme === 'light'
+                ? 'custom-file-upload light__background light__shadow'
+                : 'custom-file-upload dark__background dark__shadow'
+            }
             style={{
               backgroundImage: `url(${
                 theme.theme === 'light'
@@ -98,7 +90,7 @@ export const Modal = ({
             name='fileModal'
             onChange={handleFileChangeModal}
           />
-        </div>
+        </button>
         <Button
           onClick={handleAddThread}
           text={language.language === 'en' ? 'Create chat' : 'Создать чат'}

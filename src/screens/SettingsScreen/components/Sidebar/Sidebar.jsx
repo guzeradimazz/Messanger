@@ -10,7 +10,7 @@ import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../imgs/Icons'
 const Tab = ({ label, activeTab, onClick, icon, name, width }) => {
   const theme = useSelector(selectTheme)
   return (
-    <div
+    <li
       className={
         activeTab === label
           ? 'settings__sidebar_item-active'
@@ -23,8 +23,8 @@ const Tab = ({ label, activeTab, onClick, icon, name, width }) => {
       }}
       onClick={() => onClick(label)}>
       <img style={{ width: width }} src={icon} alt='icon' />
-      <Text label={name} />
-    </div>
+      <Text type={'h3'} label={name} />
+    </li>
   )
 }
 
@@ -79,7 +79,10 @@ export const Sidebar = ({ setChoice }) => {
             : `2px 0 10px ${DARK.shadow}`
         }`,
       }}>
-      <Text label={language.language === 'en' ? 'Settings' : 'Настройки'} />
+      <Text
+        type={'h3'}
+        label={language.language === 'en' ? 'Settings' : 'Настройки'}
+      />
       {tabs.map(i => (
         <Tab
           key={i.id}
@@ -107,7 +110,10 @@ export const Sidebar = ({ setChoice }) => {
           }
           alt='icon'
         />
-        <Text label={language.language === 'en' ? 'back' : 'назад'} />
+        <Text
+          type={'h3'}
+          label={language.language === 'en' ? 'back' : 'назад'}
+        />
       </div>
     </div>
   )

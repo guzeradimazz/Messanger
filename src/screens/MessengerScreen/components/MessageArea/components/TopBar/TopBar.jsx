@@ -8,7 +8,6 @@ import {
 import { ModalMoreActions } from '../ModalMoreActions/ModalMoreActions'
 import { setMessages } from '../../../../../../features/currentMessages'
 import { Text } from '../../../../../../components/Text/Text'
-import { DARK, LIGHT } from '../../../../../../utils/Theme/theme'
 import { selectTheme } from '../../../../../../features/themeSlice'
 import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons'
 
@@ -25,17 +24,17 @@ export const TopBar = ({ isSidebarVisible, setSidebarVisibility }) => {
     dispatch(setMessages([]))
   }
   return (
-    <div
-      className='messagearea__top'
-      style={{
-        borderBottom: `0.3px solid ${
-          theme.theme === 'light' ? LIGHT.shadow : DARK.shadow
-        }`,
-      }}>
-      <div
+    <header
+      className={
+        theme.theme === 'light'
+          ? 'messagearea__top light__shadow'
+          : 'messagearea__top dark__shadow'
+      }>
+      <button
         style={{
           opacity: !selectedThread.isSelected ? '0' : '1',
           transition: 'all 0.3s',
+          boxShadow: 'none',
           visibility: !selectedThread.isSelected ? 'hidden' : 'visible',
           backgroundImage: `url(${
             theme.theme === 'light'
@@ -47,7 +46,7 @@ export const TopBar = ({ isSidebarVisible, setSidebarVisibility }) => {
         onClick={deleteSelectionThread}
       />
       {isSidebarVisible ? null : (
-        <div
+        <button
           onClick={() => setSidebarVisibility(prev => !prev)}
           className='sidebar__close-mobile'
           style={{
@@ -60,6 +59,7 @@ export const TopBar = ({ isSidebarVisible, setSidebarVisibility }) => {
         />
       )}
       <Text
+        type={'h1'}
         label={
           selectedThread.choosedThread
             ? selectedThread.choosedThread.name
@@ -67,7 +67,7 @@ export const TopBar = ({ isSidebarVisible, setSidebarVisibility }) => {
         }
         classname={'messagearea__top-headText'}
       />
-      <div
+      <button
         style={{
           opacity: !selectedThread.isSelected ? '0' : '1',
           transition: 'all 0.3s',
@@ -85,6 +85,6 @@ export const TopBar = ({ isSidebarVisible, setSidebarVisibility }) => {
         isModalShown={isModalShown}
         setModalShown={setModalShown}
       />
-    </div>
+    </header>
   )
 }
