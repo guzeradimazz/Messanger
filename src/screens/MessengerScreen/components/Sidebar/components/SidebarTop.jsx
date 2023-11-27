@@ -12,6 +12,7 @@ export const SidebarTop = ({
   searchInput,
   setSearchInput,
   setSidebarVisibility,
+  setModalShowBot,
 }) => {
   const language = useSelector(selectLanguage)
   return (
@@ -50,6 +51,10 @@ export const SidebarTop = ({
       <Button
         onClick={() => setModalShow(prev => !prev)}
         text={language.language === 'en' ? 'create chat' : 'создать чат'}
+      />
+      <Button
+        onClick={() => setModalShowBot(prev => !prev)}
+        text={language.language === 'en' ? 'create chatbot' : 'создать бота'}
       />
     </header>
   )

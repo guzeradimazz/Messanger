@@ -1,0 +1,109 @@
+.modal {
+  width: 90%;
+  height: 50%;
+  position: absolute;
+  z-index: 6;
+  border-radius: 10px;
+  background-color: #fff;
+  top: 10%;
+  left: 5%;
+  margin: 0 auto;
+  box-shadow: 0 0 10px #c0c0c0;
+  padding: 20px;
+  transition: all 0.3s ease;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    position: relative;
+
+    &-close {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      content: '';
+      transition: all 0.3s ease;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 70%;
+    }
+    &-close:hover {
+      transition: all 0.3s ease;
+      background-image: url('../../../../../../imgs/Hover/close.svg') !important;
+    }
+  }
+
+  input {
+    width: 80%;
+    margin: 10px auto;
+    height: 40px;
+    padding-left: 5px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 10px #c0c0c0;
+    outline: none;
+  }
+
+  .file_upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    background-color: #fff;
+  }
+
+  .file_upload_dot {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #50a3f3;
+    content: '';
+    top: 5px;
+    right: 40%;
+    box-shadow: 0 0 10px #50a3f3;
+  }
+
+  .custom-file-upload {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 60px;
+    height: 60px;
+    content: '';
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+  }
+
+  .custom-file-upload:hover {
+    transition: all 0.3s ease;
+    background-image: url('../../../../../../imgs/Hover/clip.svg') !important;
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+
+  button {
+    border-radius: 10px;
+    border: none;
+    height: 40px;
+    width: 70%;
+    background-color: #fb9f82;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+}

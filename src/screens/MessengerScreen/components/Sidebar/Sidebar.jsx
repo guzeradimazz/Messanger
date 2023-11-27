@@ -26,10 +26,12 @@ import {
   ref,
   uploadBytesResumable,
 } from 'firebase/storage'
+import { ModalBot } from './components/ModalBot/ModalBot'
 
 export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
   const dispatch = useDispatch()
   const [isModalShow, setModalShow] = useState(true)
+  const [isModalShowBot, setModalShowBot] = useState(true)
   const [threadName, setThreadName] = useState('')
   const [searchInput, setSearchInput] = useState('')
   const [currentThreads, setCurrentThreads] = useState([])
@@ -140,6 +142,7 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
         theme={theme.theme}
         user={user.user}
         setModalShow={setModalShow}
+        setModalShowBot={setModalShowBot}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
       />
@@ -156,6 +159,15 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
         threadName={threadName}
         setThreadName={setThreadName}
         isModalShow={isModalShow}
+      />
+      <ModalBot
+        fileModal={fileModal}
+        setFileModal={setFileModal}
+        handleAddThread={handleAddThread}
+        setModalShow={setModalShowBot}
+        threadName={threadName}
+        setThreadName={setThreadName}
+        isModalShow={isModalShowBot}
       />
     </section>
   )
