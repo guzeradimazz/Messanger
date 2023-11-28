@@ -43,6 +43,15 @@ export const Sidebar = ({ setChoice }) => {
           : NIGHT_ICONS.Night_night,
     },
     {
+      id: 'id13r2453g242311',
+      label: 'report',
+      name: language.language === 'en' ? 'report' : 'жалоба',
+      icon:
+        theme.theme === 'light'
+          ? 'https://cdn-icons-png.flaticon.com/512/2912/2912794.png'
+          : 'https://cdn-icons-png.flaticon.com/512/2912/2912785.png',
+    },
+    {
       id: 'id13r24dafvrbwe53g24',
       label: 'language',
       name: language.language === 'en' ? 'speech' : 'язык',

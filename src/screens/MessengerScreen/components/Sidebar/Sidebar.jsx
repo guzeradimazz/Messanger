@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import './Sidebar.styles.scss'
-import { SidebarTop } from './components/SidebarTop'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectUser } from '../../../../features/userSlice'
-import { SidebarBottom } from './components/SidebarBottom'
-import { SidebarThread } from './components/SidebarThread'
-import { setThreads } from '../../../../features/threadsSlice'
+import React, { useEffect, useState } from "react";
+import "./Sidebar.styles.scss";
+import { SidebarTop } from "./components/SidebarTop";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../../../features/userSlice";
+import { SidebarBottom } from "./components/SidebarBottom";
+import { SidebarThread } from "./components/SidebarThread";
+import { setThreads } from "../../../../features/threadsSlice";
 import {
   setDoc,
   doc,
@@ -16,69 +16,106 @@ import {
   onSnapshot,
   getFirestore,
   addDoc,
-} from 'firebase/firestore'
-import { db } from '../../../../firebase'
-import { Modal } from './components/Modal/Modal'
-import { selectTheme } from '../../../../features/themeSlice'
+} from "firebase/firestore";
+import { db } from "../../../../firebase";
+import { Modal } from "./components/Modal/Modal";
+import { selectTheme } from "../../../../features/themeSlice";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
-} from 'firebase/storage'
-import { ModalBot } from './components/ModalBot/ModalBot'
+} from "firebase/storage";
+import { ModalBot } from "./components/ModalBot/ModalBot";
+import { setBots } from "../../../../features/botsSlice";
 
 export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
-  const dispatch = useDispatch()
-  const [isModalShow, setModalShow] = useState(true)
-  const [isModalShowBot, setModalShowBot] = useState(true)
-  const [threadName, setThreadName] = useState('')
-  const [searchInput, setSearchInput] = useState('')
-  const [currentThreads, setCurrentThreads] = useState([])
-  const [fileModal, setFileModal] = useState(null)
+  const dispatch = useDispatch();
+  const [isModalShow, setModalShow] = useState(true);
+  const [isModalShowBot, setModalShowBot] = useState(true);
+  const [threadName, setThreadName] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [currentThreads, setCurrentThreads] = useState([]);
+  const [fileModal, setFileModal] = useState(null);
 
-  const user = useSelector(selectUser)
-  const theme = useSelector(selectTheme)
+  const [botDesc, setBotDesc] = useState("");
+  const [currentBots, setCurrentBots] = useState([]);
+
+  const user = useSelector(selectUser);
+  const theme = useSelector(selectTheme);
 
   const getThreads = async () => {
-    const q = query(collection(db, 'threads'))
+    const q = query(collection(db, "threads"));
 
-    const querySnapshot = await getDocs(q)
-    const threadsSnapshot = querySnapshot.docs.map(i => ({
+    const querySnapshot = await getDocs(q);
+    const threadsSnapshot = querySnapshot.docs.map((i) => ({
       id: i.id,
       ...i.data(),
-    }))
-    threadsSnapshot.sort((a, b) => b.date - a.date)
-    dispatch(setThreads(threadsSnapshot))
-    setCurrentThreads(threadsSnapshot)
-  }
+    }));
+    threadsSnapshot.sort((a, b) => b.date - a.date);
+    dispatch(setThreads(threadsSnapshot));
+    setCurrentThreads(threadsSnapshot);
+  };
+
+  const getBots = async () => {
+    const q = query(collection(db, "bots"));
+
+    const querySnapshot = await getDocs(q);
+    const threadsSnapshot = querySnapshot.docs.map((i) => ({
+      id: i.id,
+      ...i.data(),
+    }));
+    threadsSnapshot
+      .filter((i) => i.userId === user.user.id)
+      .sort((a, b) => b.date - a.date);
+    dispatch(setBots(threadsSnapshot));
+    setCurrentThreads(threadsSnapshot);
+  };
 
   useEffect(() => {
-    const threadsRef = collection(db, 'threads')
-    const threadsQuery = query(threadsRef)
-    const unsubscribe = onSnapshot(threadsQuery, snapshot => {
-      const threads = snapshot.docs.map(doc => ({
+    //bots
+    const botsRef = collection(db, "bots");
+    const botsQ = query(botsRef);
+    const unsubscribeBots = onSnapshot(botsQ, (snapshot) => {
+      const bots = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      }))
-      threads.sort((a, b) => a.date - b.date)
-      dispatch(setThreads(threads))
-      setCurrentThreads(threads)
-    })
+      }));
+      bots.sort((a, b) => a.date - b.date);
+      dispatch(setBots(bots));
+      setCurrentBots(bots);
+    });
+
+    //chats
+    const threadsRef = collection(db, "threads");
+    const threadsQuery = query(threadsRef);
+    const unsubscribe = onSnapshot(threadsQuery, (snapshot) => {
+      const threads = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      threads.sort((a, b) => a.date - b.date);
+      dispatch(setThreads(threads));
+      setCurrentThreads(threads);
+    });
 
     return () => {
-      unsubscribe()
-    }
-  }, [])
+      unsubscribe();
+      unsubscribeBots();
+    };
+  }, []);
 
   useEffect(() => {
     if (searchInput) {
-      const searchArray = currentThreads.filter(item =>
+      const searchArray = currentThreads.filter((item) =>
         item.name.toLowerCase().includes(`${searchInput.toLowerCase()}`)
-      )
-      setCurrentThreads(searchArray)
-    } else getThreads()
-  }, [searchInput])
+      );
+      setCurrentThreads(searchArray);
+    } else {
+      getBots();
+      getThreads();
+    }
+  }, [searchInput]);
 
   const handleAddThread = async () => {
     if (fileModal === null && threadName.trim()) {
@@ -86,57 +123,107 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
         name: threadName,
         userId: user.user.id,
         date: Timestamp.fromDate(new Date()).seconds,
-      }
-      await setDoc(doc(db, 'threads', newThread.name), newThread)
-      getThreads()
-      setModalShow(prev => !prev)
-      setThreadName('')
+      };
+      await setDoc(doc(db, "threads", newThread.name), newThread);
+      getThreads();
+      setModalShow((prev) => !prev);
+      setThreadName("");
     } else if (fileModal) {
-      const storage = getStorage()
-      const storageRef = ref(storage, 'filesthreads/' + fileModal.name)
-      const uploadTask = uploadBytesResumable(storageRef, fileModal)
-      const threadRef = collection(getFirestore(), 'threads')
+      const storage = getStorage();
+      const storageRef = ref(storage, "filesthreads/" + fileModal.name);
+      const uploadTask = uploadBytesResumable(storageRef, fileModal);
+      const threadRef = collection(getFirestore(), "threads");
       uploadTask.on(
-        'state_changed',
-        snapshot => {
+        "state_changed",
+        (snapshot) => {
           const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          console.log('Upload is ' + progress + '% done')
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
         },
-        error => {
-          console.error(error)
+        (error) => {
+          console.error(error);
         },
         () => {
-          console.log('Upload successful')
-          getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+          console.log("Upload successful");
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             addDoc(threadRef, {
               name: threadName,
               userId: user.user.id,
               date: Timestamp.fromDate(new Date()).seconds,
               file: downloadURL,
-            })
-          })
+            });
+          });
         }
-      )
-      setFileModal(null)
+      );
+      setFileModal(null);
     } else {
-      alert('Please, write thread name!')
-      return
+      alert("Please, write thread name!");
+      return;
     }
-  }
+    setModalShow(false);
+  };
+
+  const handleCreateBot = async () => {
+    if (fileModal === null && threadName.trim() && botDesc.trim()) {
+      const newThread = {
+        name: threadName,
+        userId: user.user.id,
+        date: Timestamp.fromDate(new Date()).seconds,
+        desc: botDesc,
+      };
+      await setDoc(doc(db, "bots", newThread.name), newThread);
+      getBots();
+      setModalShow((prev) => !prev);
+      setThreadName("");
+    } else if (fileModal) {
+      const storage = getStorage();
+      const storageRef = ref(storage, "botsthreads/" + fileModal.name);
+      const uploadTask = uploadBytesResumable(storageRef, fileModal);
+      const threadRef = collection(getFirestore(), "bots");
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          console.error(error);
+        },
+        () => {
+          console.log("Upload successful");
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            addDoc(threadRef, {
+              name: threadName,
+              userId: user.user.id,
+              date: Timestamp.fromDate(new Date()).seconds,
+              file: downloadURL,
+              desc: botDesc,
+            });
+          });
+        }
+      );
+      setFileModal(null);
+    } else {
+      alert("Please, fill all inputs!");
+      return;
+    }
+    setModalShowBot(false);
+  };
 
   return (
     <section
       className={
-        theme.theme === 'light'
-          ? 'sidebar light__background light__shadow'
-          : 'sidebar dark__background dark__shadow'
+        theme.theme === "light"
+          ? "sidebar light__background light__shadow"
+          : "sidebar dark__background dark__shadow"
       }
       style={{
-        transform: `translateX(${isSidebarVisible ? '0' : '-200%'})`,
-        opacity: `${isSidebarVisible ? '1' : '0'}`,
-        zIndex: isSidebarVisible ? '123' : '-21',
-      }}>
+        transform: `translateX(${isSidebarVisible ? "0" : "-200%"})`,
+        opacity: `${isSidebarVisible ? "1" : "0"}`,
+        zIndex: isSidebarVisible ? "123" : "-21",
+      }}
+    >
       <SidebarTop
         setSidebarVisibility={setSidebarVisibility}
         theme={theme.theme}
@@ -148,6 +235,7 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
       />
       <SidebarThread
         threads={currentThreads}
+        bots={currentBots}
         setSidebarVisibility={setSidebarVisibility}
       />
       <SidebarBottom />
@@ -163,12 +251,14 @@ export const Sidebar = ({ isSidebarVisible, setSidebarVisibility }) => {
       <ModalBot
         fileModal={fileModal}
         setFileModal={setFileModal}
-        handleAddThread={handleAddThread}
+        handleAddThread={handleCreateBot}
         setModalShow={setModalShowBot}
         threadName={threadName}
         setThreadName={setThreadName}
         isModalShow={isModalShowBot}
+        botDesc={botDesc}
+        setBotDesc={setBotDesc}
       />
     </section>
-  )
-}
+  );
+};

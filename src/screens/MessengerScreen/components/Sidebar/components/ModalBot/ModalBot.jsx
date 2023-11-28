@@ -14,6 +14,8 @@ export const ModalBot = ({
   isModalShow,
   setFileModal,
   fileModal,
+  botDesc,
+  setBotDesc,
 }) => {
   const theme = useSelector(selectTheme);
   const language = useSelector(selectLanguage);
@@ -67,6 +69,22 @@ export const ModalBot = ({
             language.language === "en"
               ? "Type name of your chatbot"
               : "Имя бота"
+          }
+        />
+        <input
+          className={
+            theme.theme === "light"
+              ? "light__color light__background light__shadow"
+              : "dark__color dark__background dark__shadow"
+          }
+          maxLength={25}
+          value={botDesc}
+          onChange={(e) => setBotDesc(e.target.value)}
+          type="text"
+          placeholder={
+            language.language === "en"
+              ? "Description"
+              : "Описание"
           }
         />
         <button className="file_upload">
