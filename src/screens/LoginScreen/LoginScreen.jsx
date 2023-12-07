@@ -36,7 +36,9 @@ export const LoginScreen = () => {
       const user = result.user
       const userRef = doc(firestore, 'users', user.uid)
       const userDoc = await getDoc(userRef)
-
+      console.log('================user====================');
+      console.log(user);
+      console.log('====================================');
       const newUser = {
         displayName: user.displayName,
         email: user.email,

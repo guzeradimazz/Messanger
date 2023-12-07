@@ -181,21 +181,39 @@ export const MessageArea = ({ isSidebarVisible, setSidebarVisibility }) => {
 
   const getMessages = async () => {
     if (selectedThread.isSelected) {
-      const threadId = selectedThread.choosedThread?.id;
-      const messagesRef = collection(
-        getFirestore(),
-        "threads",
-        threadId,
-        "messages"
-      );
-      const messages = await getDocs(messagesRef);
-      const unSortedMessages = [];
-      messages.forEach((doc) => {
-        const data = doc.data();
-        unSortedMessages.push(data);
-      });
-      unSortedMessages.sort((a, b) => a.date - b.date);
-      dispatch(setMessages(unSortedMessages));
+      if (isBot) {
+        const threadId = selectedThread.choosedThread?.id;
+        const messagesRef = collection(
+          getFirestore(),
+          "bots",
+          threadId,
+          "messages"
+        );
+        const messages = await getDocs(messagesRef);
+        const unSortedMessages = [];
+        messages.forEach((doc) => {
+          const data = doc.data();
+          unSortedMessages.push(data);
+        });
+        unSortedMessages.sort((a, b) => a.date - b.date);
+        dispatch(setMessages(unSortedMessages));
+      } else {
+        const threadId = selectedThread.choosedThread?.id;
+        const messagesRef = collection(
+          getFirestore(),
+          "threads",
+          threadId,
+          "messages"
+        );
+        const messages = await getDocs(messagesRef);
+        const unSortedMessages = [];
+        messages.forEach((doc) => {
+          const data = doc.data();
+          unSortedMessages.push(data);
+        });
+        unSortedMessages.sort((a, b) => a.date - b.date);
+        dispatch(setMessages(unSortedMessages));
+      }
     }
   };
 
@@ -211,6 +229,74 @@ export const MessageArea = ({ isSidebarVisible, setSidebarVisibility }) => {
     }
   }, [selectedThread.isSelected, selectedThread.choosedThread]);
 
+  const sendAiMsg = async (e) => {
+    e.preventDefault();
+    const API = "Dpb8UO5YPeKd31MJOZ11jcmPuJtQN3H5DXEuIjm6SFXtYZR23Yfn4CJA69ak";
+    if (message.trim() === "") {
+      alert("Empty message");
+      return null;
+    }
+    try {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        key: API,
+        prompt: message,
+        negative_prompt: null,
+        width: "512",
+        height: "512",
+        samples: "1",
+        num_inference_steps: "20",
+        seed: null,
+        guidance_scale: 7.5,
+        safety_checker: "yes",
+        multi_lingual: "no",
+        panorama: "no",
+        self_attention: "no",
+        upscale: "no",
+        embeddings_model: null,
+        webhook: null,
+        track_id: null,
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch("https://stablediffusionapi.com/api/v3/text2img", requestOptions)
+        .then((response) => response.text())
+        .then(async (result) => {
+          const threadId = selectedThread.choosedThread.id;
+          const messagesRef = collection(
+            getFirestore(),
+            "bots",
+            threadId,
+            "messages"
+          );
+          const data = JSON.parse(result).output[0];
+          await addDoc(messagesRef, {
+            userId: user.user.id,
+            message: message,
+            id: "id" + Math.random().toString(16).slice(2),
+            date: Timestamp.fromDate(new Date()).seconds,
+          });
+          await addDoc(messagesRef, {
+            userId: user.user.id+1,
+            message: data,
+            id: "id" + Math.random().toString(16).slice(2),
+            date: Timestamp.fromDate(new Date()).seconds,
+          });
+          getMessagesAndFixStates();
+        })
+        .catch((error) => console.log("error", error));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="messagearea">
@@ -231,7 +317,7 @@ export const MessageArea = ({ isSidebarVisible, setSidebarVisibility }) => {
             setFile={setFile}
             message={message}
             setMessage={setMessage}
-            sendMessage={sendMessage}
+            sendMessage={isBot ? sendAiMsg : sendMessage}
             isBot={isBot}
           />
         </main>
