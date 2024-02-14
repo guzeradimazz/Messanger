@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./Message.styles.scss";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../../../../../features/themeSlice";
-
+import { saveAs } from "file-saver";
 import { Text } from "../../../../../../../components/Text/Text";
+import DownloadImg from './download.png'
+import CrossImg from './cross.png'
 
 export const Message = ({
   message,
@@ -14,6 +16,8 @@ export const Message = ({
   audioURL,
 }) => {
   const [isBot, setIsBot] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalImg, setModalImg] = useState(null);
   const checkIsBot = () => {
     const pattern = /^https:\/\/.*\.png$/;
     if (pattern.test(message)) {
@@ -27,6 +31,20 @@ export const Message = ({
   }, [message]);
   const theme = useSelector(selectTheme);
 
+  const handleClickPicture = (pic) => {
+    setModalImg(pic);
+    setModalVisible(true);
+  };
+
+  const handleClosePicture = () => {
+    setModalImg(null);
+    setModalVisible(false);
+  };
+
+  const handleDownloadImg = () => {
+    saveAs(modalImg, "messanger_image.jpg");
+  };
+
   if (isBot) {
     return (
       <div
@@ -35,6 +53,21 @@ export const Message = ({
           flexDirection: isCurrentUser ? "row-reverse" : "row",
         }}
       >
+        {modalVisible && (
+          <div className="modalImg">
+            <img
+              onClick={handleClosePicture}
+              className="modalImgCross"
+              src={CrossImg}
+            />
+            <img
+              onClick={handleDownloadImg}
+              className="modalImgDownload"
+              src={DownloadImg}
+            />
+            <img src={modalImg} alt="" />
+          </div>
+        )}
         <div
           className={
             theme.theme === "light"
@@ -45,11 +78,14 @@ export const Message = ({
             flexDirection: isCurrentUser ? "row-reverse" : "row",
           }}
         >
-          <img src={message}  className="message__content_img" alt="picture" />
+          <button onClick={() => handleClickPicture(message)}>
+            <img src={message} className="message__content_img" alt="picture" />
+          </button>
         </div>
       </div>
     );
   }
+
   return (
     <div
       className={"message__wrapper"}
@@ -67,10 +103,43 @@ export const Message = ({
           flexDirection: isCurrentUser ? "row-reverse" : "row",
         }}
       >
-        <img src={photo} alt="avatar" />
+        {photo ? (
+          <img src={photo} alt="avatar" />
+        ) : (
+          <div
+            style={{
+              width: 50,
+              height: 50,
+              backgroundColor: "black",
+              borderRadius: 100,
+            }}
+          />
+        )}
         <div className="message__content">
           {picture && (
-            <img src={picture} className="message__content_img" alt="picture" />
+            <>
+              {modalVisible && (
+                <div className="modalImg">
+                  <img
+                    onClick={handleClosePicture}
+                    className="modalImgCross"
+                    src={CrossImg}
+                  />
+                  <img
+                    onClick={handleDownloadImg}
+                    className="modalImgDownload"
+                    src={DownloadImg}
+                  />
+                  <img  src={modalImg} alt="" />
+                </div>
+              )}
+              <img
+                onClick={() => handleClickPicture(picture)}
+                src={picture}
+                className="message__content_img"
+                alt="picture"
+              />
+            </>
           )}
           {audioURL && (
             <audio controls onClick={(e) => e.target.play()}>

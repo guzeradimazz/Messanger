@@ -31,7 +31,7 @@ export const Thread = ({ name, date, onClick, id, file }) => {
             : `0px 0 10px ${DARK.shadow}`
         }`,
       }}>
-      <img src={file ? file : 'https://picsum.photos/200/200'} alt='avatar' />
+      <img src={file ? file : 'https://random.imagecdn.app/200/200'} alt='avatar' />
       <Text type={'p'} label={name} />
       <small>{parseTime(date)}</small>
     </li>

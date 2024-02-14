@@ -5,7 +5,7 @@ import { setChoosedThread } from "../../../../../features/choosedThreadSlice";
 import { selectTheme } from "../../../../../features/themeSlice";
 import { selectLanguage } from "../../../../../features/languageSlice";
 
-export const SidebarThread = ({ threads, setSidebarVisibility, bots }) => {
+export const SidebarThread = ({ threads, setSidebarVisibility, bots, setIsGenuis }) => {
   const dispatch = useDispatch();
   const language = useSelector(selectLanguage);
   const theme = useSelector(selectTheme);
@@ -13,6 +13,7 @@ export const SidebarThread = ({ threads, setSidebarVisibility, bots }) => {
   const setChoosedThreadToMessages = (thread) => {
     if (window.screen.width <= 500) setSidebarVisibility(false);
     dispatch(setChoosedThread(thread));
+    setIsGenuis(false)
   };
   return (
     <ul

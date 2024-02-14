@@ -7,14 +7,26 @@ import {
   selectLanguage,
   setLanguage,
 } from "../../../../features/languageSlice";
+import { selectUser } from "../../../../features/userSlice";
 import { Bubble } from "../../../../components/Bubble/Bubble";
 import emailjs from "@emailjs/browser";
+import {
+  collection,
+  getFirestore,
+  addDoc,
+  Timestamp,
+} from "firebase/firestore";
+import { sendLog } from "../../../../utils/log";
 
 const ThemeModify = () => {
   const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
   const language = useSelector(selectLanguage);
+  const user = useSelector(selectUser);
+
   const handleChangeTheme = () => {
+
+    sendLog(user.user.id, "USER CHANGE THEME");
     if (theme.theme === "light") dispatch(setTheme("dark"));
     else if (theme.theme === "dark") dispatch(setTheme("light"));
     else return null;
@@ -30,8 +42,13 @@ const ThemeModify = () => {
 };
 
 const LanguageModify = () => {
+  const user = useSelector(selectUser);
+
   const dispatch = useDispatch();
-  const handleChangeLanguage = (type) => dispatch(setLanguage(type));
+  const handleChangeLanguage = (type) => {
+    dispatch(setLanguage(type));
+    sendLog(user.user.id, "USER CHANGE LANGUAGE TO " + type);
+  }
   return (
     <div className="languageModify">
       <Button onClick={() => handleChangeLanguage("en")} text={"English"} />
@@ -49,7 +66,9 @@ const BubbleWrapper = () => {
 };
 
 const ReportSend = () => {
-  const sendEmail = (e) => {
+  const user = useSelector(selectUser);
+
+  const sendEmail = async (e) => {
     e.preventDefault();
     if (
       document.getElementById("emailForm").value === "" ||
@@ -65,6 +84,14 @@ const ReportSend = () => {
       "dHCyn07M0V4bPsc53"
     );
     alert("success sended");
+    const reportRef = collection(getFirestore(), "reports");
+    await addDoc(reportRef, {
+      userId: user.user.id,
+      reportDesc: document.getElementById("emailText").value,
+      reportH: document.getElementById("emailForm").value,
+      timestamp: Timestamp.fromDate(new Date()).seconds,
+    });
+    sendLog(user.user.id, "USER SEND REPORT " + document.getElementById("emailForm").value);
     document.getElementById("emailForm").value = "";
     document.getElementById("emailText").value = "";
   };

@@ -286,3 +286,17 @@ audio::-webkit-media-controls-panel {
 .messagearea__messages::-webkit-scrollbar {
   width: 0 !important;
 }
+
+
+.nluxc-root>.nluxc-chat-room-container>.nluxc-chat-room-conversation-container>.nluxc-conversation-messages-container>.nluxc-conversation-welcome-message>.nluxc-conversation-welcome-message-photo-container>.nluxc-conversation-welcome-message-rendered-photo{
+  z-index: 10 !important;
+}
+.nluxc-root>.nluxc-chat-room-container>.nluxc-chat-room-conversation-container>.nluxc-conversation-messages-container>.nluxc-conversation-welcome-message>.nluxc-conversation-welcome-message-photo-container>.nluxc-conversation-welcome-message-letter{
+  z-index: 9 !important;
+}
+.nluxc-text-message-persona-letter{
+  z-index: 9 !important;
+}
+.nluxc-text-message-persona-rendered-photo {
+  z-index: 10 !important;
+}

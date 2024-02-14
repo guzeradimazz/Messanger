@@ -19,8 +19,13 @@ export const ModalMoreActions = ({ isModalShown, setModalShown }) => {
     await deleteDoc(threadRef)
     dispatch(removeChoosedThread(null))
     setModalShown(false)
-  }
+    
 
+    const threadRef2 = doc(collection(db, 'bots'), threadId)
+    await deleteDoc(threadRef2)
+    dispatch(removeChoosedThread(null))
+    setModalShown(false)
+  }
   const currentThread = useSelector(selectChoosedThread)
 
   const theme = useSelector(selectTheme)
