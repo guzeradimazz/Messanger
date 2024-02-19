@@ -321,9 +321,6 @@ export const MessageArea = ({
       'Write concise answers under 5 sentences. Be funny.',
   };
 
-  console.log('====================================');
-  console.log(user.user);
-  console.log('====================================');
 
   const personas = {
     bot: {

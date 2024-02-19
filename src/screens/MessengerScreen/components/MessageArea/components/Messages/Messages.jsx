@@ -24,9 +24,6 @@ export const Messages = () => {
   const dispatch = useDispatch()
   const selectedThread = useSelector(selectChoosedThread)
 
-  console.log('====================================');
-  console.log(messages);
-  console.log('====================================');
   const setPhoto = userId => {
     let photo = ''
     users.users.map(item => {

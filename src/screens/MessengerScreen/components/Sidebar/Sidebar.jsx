@@ -87,8 +87,11 @@ export const Sidebar = ({
       ...i.data(),
     }));
     threadsSnapshot.sort((a, b) => b.date - a.date);
-    dispatch(setThreads(threadsSnapshot));
-    setCurrentThreads(threadsSnapshot);
+    const filterByMembersSnapshot = threadsSnapshot.filter((chat) => {
+      return chat.members.some((member) => member === user.user.id);
+    });
+    dispatch(setThreads(filterByMembersSnapshot));
+    setCurrentThreads(filterByMembersSnapshot);
   };
 
   const getBots = async () => {
@@ -102,9 +105,6 @@ export const Sidebar = ({
     const snaps = threadsSnapshot
       .filter((i) => i.userId === user.user.id)
       .sort((a, b) => b.date - a.date);
-    console.log('====================================');
-    console.log(snaps);
-    console.log('====================================');
     dispatch(setBots(snaps));
     setCurrentThreads(snaps);
   };
@@ -166,6 +166,8 @@ export const Sidebar = ({
         name: threadName,
         userId: user.user.id,
         date: Timestamp.fromDate(new Date()).seconds,
+        admin: user.user.id,
+        members: [user.user.id],
       };
       await setDoc(doc(db, 'threads', newThread.name), newThread);
       getThreads();
@@ -195,6 +197,8 @@ export const Sidebar = ({
               userId: user.user.id,
               date: Timestamp.fromDate(new Date()).seconds,
               file: downloadURL,
+              admin: user.user.id,
+              members: [user.user.id],
             });
           });
         }
