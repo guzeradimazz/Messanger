@@ -4,7 +4,7 @@ export const choosedThreadSlice = createSlice({
   name: 'choosedThread',
   initialState: {
     choosedThread: null,
-    isSelected: false
+    isSelected: false,
   },
   reducers: {
     setChoosedThread: (state, action) => {
@@ -14,10 +14,10 @@ export const choosedThreadSlice = createSlice({
     removeChoosedThread: (state, action) => {
       state.choosedThread = action.payload
       state.isSelected = false
-    }
-  }
+    },
+  },
 })
 export const { setChoosedThread, removeChoosedThread } =
   choosedThreadSlice.actions
-export const selectChoosedThread = (state) => state.choosedThread
+export const selectChoosedThread = state => state.choosedThread
 export default choosedThreadSlice.reducer

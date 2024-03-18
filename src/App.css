@@ -1,14 +1,47 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
 }
-button{
+button {
   cursor: pointer;
+  box-shadow: none !important;
+  border: none;
+  background-color: transparent;
 }
-.App{
+.App {
   overflow: hidden;
   width: 100vw;
   height: 100vh;
+}
+ul li {
+  list-style: none;
+}
+button:focus {
+  box-shadow: 0 0 4px orange !important;
+}
+audio::-webkit-media-controls-panel {
+  background-color: #fcc03f !important;
+}
+audio::-webkit-media-controls-enclosure::after {
+  content: '';
+}
+audio::-webkit-media-controls-panel {
+  background-color: #ffee56;
+}
+
+audio::-webkit-media-controls-play-button {
+  background-color: #fff494;
+  border-radius: 50%;
+}
+
+audio::-webkit-media-controls-play-button:hover {
+  background-color: rgba(224, 209, 177, 0.7);
+}
+h1 {
+  font-weight: normal;
+}
+h3 {
+  font-weight: lighter;
 }

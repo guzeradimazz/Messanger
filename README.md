@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Hi there! This is my Messanger web and mobile application!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br/>
+Stack of technologies -- React | Redux | JavaScript | Firebase | SCSS
+<a href='https://guzeradimaz.github.io/Messanger/'>TRY MESSENGER</a>
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+[SEE MOBILE VERSION](#mobile)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+# You are greeted by a login screen where you can log in to the messenger using your Google account
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<img width="1436" alt="Снимок экрана 2023-03-15 в 00 12 25" src="https://user-images.githubusercontent.com/127554918/225137486-44d1ee26-6068-4798-8271-66cc467f14eb.png">
 
-### `npm run build`
+# After successfully logging into your account, you can see your account details in the upper left corner
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<img width="1435" alt="Снимок экрана 2023-03-21 в 01 25 52" src="https://user-images.githubusercontent.com/127554918/226478828-772927c4-430c-479d-8255-85f004a4e7ff.png">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<img width="1440" alt="Снимок экрана 2023-03-21 в 01 44 58" src="https://user-images.githubusercontent.com/127554918/226482020-44c0456d-d402-496b-be62-10240b9b32ea.png">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Next you can: 
+<ul> 
+  <li> Create new chat</li>
+  <li> If chat exists you can exchange messages</li>  
+  <li> Go to settings</li>
+  <li> If chat exists you can filter them by search input</li>
+  <li> Logout</li>
+  <li> Or just watch the animation :)</li>
+</ul>
 
-### `npm run eject`
+# There are lots of opportunities inside messenger!!!
+For example you can: 
+<ul> 
+  <li> Exchange sample messages</li>
+  <li> Exchange voice messages or files</li>
+  <li> Scroll full history of selected chat</li>
+  <li> And some additional actions using dots...</li>
+</ul>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<img width="1440" alt="Снимок экрана 2023-03-21 в 01 28 59" src="https://user-images.githubusercontent.com/127554918/226479202-a1341372-3793-4af0-9d57-706d14a23fd2.png">
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Also there is special emoji picker
+<img width="1440" alt="Снимок экрана 2023-03-21 в 01 34 11" src="https://user-images.githubusercontent.com/127554918/226480207-0db7abdb-22ad-4406-849a-bf8ff55e221e.png">
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# On the Settings screen you can change theme or language
 
-## Learn More
+<img width="1440" alt="Снимок экрана 2023-03-21 в 01 35 41" src="https://user-images.githubusercontent.com/127554918/226480676-bdb5b59c-2ed0-4a1c-9131-ec07b5d24ef4.png">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# And finally some screens using night theme
+<img width="1440" alt="Снимок экрана 2023-03-21 в 01 36 56" src="https://user-images.githubusercontent.com/127554918/226480954-65aca42b-cacb-4590-a4cc-b6113a551972.png">
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img width="1440" alt="222" src="https://user-images.githubusercontent.com/127554918/226481159-26743bd8-8e32-4cf1-a7fc-aaad5ea78e20.png">
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+# Mobile
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<div style={{display:'flex', flexWrap:'wrap'}}>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483409-17b367ce-5e69-4360-ae05-4ae57558e81f.jpeg' width='300px'/>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483412-278367de-9d21-4051-a975-c603cebf4d74.jpeg' width='300px'/>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483414-37096499-c60b-4239-891d-252be229472e.jpeg' width='300px'/>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483415-24d065fc-f634-438d-90c9-d25b35d75fce.jpeg' width='300px'/>
+  <img alt='screen' src='https://user-images.githubusercontent.com/127554918/226483416-5c846255-be05-412f-9d70-766a5a0b2bc0.jpeg' width='300px'/>
+</div>
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

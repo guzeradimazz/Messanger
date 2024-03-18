@@ -1,6 +1,111 @@
-.messenger{
+.messenger {
   width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
+}
+.sidebar__close-mobile {
+  display: none;
+}
+.mobile-btn-send {
+  display: none;
+}
+.audiobuttonMobile {
+  display: none;
+}
+@media screen and (max-width: 425px) {
+  .sidebar__top input {
+    -webkit-box-shadow: 0px 0px 15px 10px rgba(192, 192, 192, 0.2) !important;
+    -moz-box-shadow: 0px 0px 15px 10px rgba(192, 192, 192, 0.2) !important;
+    box-shadow: 0px 0px 15px 10px rgba(192, 192, 192, 0.2) !important;
+  }
+  .sidebar {
+    flex: none;
+    width: 90%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-y: hidden;
+  }
+  .sidebar__close-mobile {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+  }
+  .messagearea {
+    flex: none;
+    width: 100vw;
+    height: 100vh;
+  }
+  .back-icon {
+    display: none;
+  }
+  .emoji-btn {
+    display: none;
+  }
+  .sendbtn-web {
+    display: none;
+  }
+  .mobile-btn-send {
+    width: 40px !important;
+    height: 40px !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    border-radius: 50% !important;
+    display: block;
+  }
+  .audiobuttonMobile {
+    display: block;
+    width: 40px !important;
+    height: 40px !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .audiobutton {
+    display: none;
+  }
+  .audiobutton:focus {
+    outline: none;
+  }
+  .file_upload {
+    width: 40px !important;
+    height: 40px !important;
+    .custom-file-upload {
+      padding: 0;
+      width: 40px !important;
+      height: 40px !important;
+    }
+  }
+  .message {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  audio {
+    width: 240px !important;
+  }
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+@media screen and (max-width: 320px) {
+  audio {
+    width: 210px !important;
+  }
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }

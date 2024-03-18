@@ -8,15 +8,34 @@
   padding: 20px;
   position: relative;
 
-  img {
+  .back-icon {
     cursor: pointer;
+    content: '';
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
     width: 30px;
+    height: 30px;
   }
-
+  .back-icon:hover {
+    background-image: url('../../../../../../imgs/Hover/back.svg') !important;
+  }
+  .dots-icon {
+    cursor: pointer;
+    content: '';
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    width: 50px;
+    height: 30px;
+    box-shadow: none;
+  }
+  .dots-icon:hover {
+    background-image: url('../../../../../../imgs/Hover/dots.svg') !important;
+  }
   &-headText {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 18px;
-    
   }
 }

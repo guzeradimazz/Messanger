@@ -1,60 +1,115 @@
-import React, { useState } from 'react'
-import './TopBar.styles.scss'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import './TopBar.styles.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectChoosedThread,
-  removeChoosedThread
-} from '../../../../../../features/choosedThreadSlice'
-import { ModalMoreActions } from '../ModalMoreActions/ModalMoreActions'
-import { setMessages } from '../../../../../../features/currentMessages'
+  removeChoosedThread,
+} from '../../../../../../features/choosedThreadSlice';
+import { ModalMoreActions } from '../ModalMoreActions/ModalMoreActions';
+import { setMessages } from '../../../../../../features/currentMessages';
+import { Text } from '../../../../../../components/Text/Text';
+import { selectTheme } from '../../../../../../features/themeSlice';
+import { DEFUALT_ICONS, NIGHT_ICONS } from '../../../../../../imgs/Icons';
+import { ModalMoreAddPeople } from '../ModalMoreAddPeople/ModalMoreActions';
+import { ModalMoreRemovePeople } from '../ModalMoreRemovePeople/ModalMoreRemovePeople';
+import { selectUser } from '../../../../../../features/userSlice';
 
-export const TopBar = () => {
-  const selectedThread = useSelector(selectChoosedThread)
+export const TopBar = ({ isSidebarVisible, setSidebarVisibility }) => {
+  const selectedThread = useSelector(selectChoosedThread);
+  const theme = useSelector(selectTheme);
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const thread = useSelector(selectChoosedThread);
 
-  const [isModalShown, setModalShown] = useState(false)
-  const dispatch = useDispatch()
+  const [admin, setAdmin] = useState(null);
+  useEffect(() => {
+    if (thread.choosedThread?.admin === user.user.id) setAdmin(true);
+    else setAdmin(false);
+  }, [user, thread]);
+  const [isModalShown, setModalShown] = useState(false);
+  const [isModalShown2, setModalShown2] = useState(false);
+  const [isModalShown3, setModalShown3] = useState(false);
 
   const deleteSelectionThread = () => {
-    dispatch(removeChoosedThread(null))
-    setModalShown(false)
-    dispatch(setMessages([]))
-  }
+    dispatch(removeChoosedThread(null));
+    setModalShown(false);
+    dispatch(setMessages([]));
+  };
   return (
-    <div className="messagearea__top">
-      <img
+    <header
+      className={
+        theme.theme === 'light'
+          ? 'messagearea__top light__shadow'
+          : 'messagearea__top dark__shadow'
+      }
+    >
+      <button
         style={{
           opacity: !selectedThread.isSelected ? '0' : '1',
           transition: 'all 0.3s',
-          visibility: !selectedThread.isSelected ? 'hidden' : 'visible'
+          boxShadow: 'none',
+          visibility: !selectedThread.isSelected ? 'hidden' : 'visible',
+          backgroundImage: `url(${
+            theme.theme === 'light'
+              ? DEFUALT_ICONS.Back_def
+              : NIGHT_ICONS.Back_night
+          })`,
         }}
-        src="https://cdn-icons-png.flaticon.com/512/130/130882.png"
-        alt="<"
+        className='back-icon'
         onClick={deleteSelectionThread}
       />
-      <p
-        className="messagearea__top-headText"
-        style={{
-          transition: 'all 0.3s'
-        }}
-      >
-        {selectedThread.choosedThread
-          ? selectedThread.choosedThread.name
-          : 'Messenger'}
-      </p>
-      <img
-        style={{
-          opacity: !selectedThread.isSelected ? '0' : '1',
-          transition: 'all 0.3s',
-          visibility: !selectedThread.isSelected ? 'hidden' : 'visible'
-        }}
-        src="https://cdn-icons-png.flaticon.com/512/512/512142.png"
-        alt="..."
-        onClick={() => setModalShown((prev) => !prev)}
+      {isSidebarVisible ? null : (
+        <button
+          onClick={() => setSidebarVisibility((prev) => !prev)}
+          className='sidebar__close-mobile'
+          style={{
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Burger_def
+                : NIGHT_ICONS.Burger_night
+            })`,
+          }}
+        />
+      )}
+      <Text
+        type={'h1'}
+        label={
+          selectedThread.choosedThread
+            ? selectedThread.choosedThread.name
+            : 'Messenger'
+        }
+        classname={'messagearea__top-headText'}
       />
+      {admin ? (
+        <button
+          style={{
+            opacity: !selectedThread.isSelected ? '0' : '1',
+            transition: 'all 0.3s',
+            visibility: !selectedThread.isSelected ? 'hidden' : 'visible',
+            backgroundImage: `url(${
+              theme.theme === 'light'
+                ? DEFUALT_ICONS.Dots_def
+                : NIGHT_ICONS.Dots_night
+            })`,
+          }}
+          className='dots-icon'
+          onClick={() => setModalShown((prev) => !prev)}
+        />
+      ) : null}
       <ModalMoreActions
         isModalShown={isModalShown}
         setModalShown={setModalShown}
+        setModalShown2={setModalShown2}
+        setModalShown3={setModalShown3}
       />
-    </div>
-  )
-}
+      <ModalMoreAddPeople
+        isModalShown={isModalShown2}
+        setModalShown={setModalShown2}
+      />
+      <ModalMoreRemovePeople
+        isModalShown={isModalShown3}
+        setModalShown={setModalShown3}
+      />
+    </header>
+  );
+};
