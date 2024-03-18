@@ -19,8 +19,7 @@ export const Message = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [modalImg, setModalImg] = useState(null);
   const checkIsBot = () => {
-    const pattern = /^https:\/\/.*\.png$/;
-    if (pattern.test(message)) {
+    if (message.includes('https://')) {
       setIsBot(true);
     } else {
       setIsBot(false);
@@ -44,7 +43,9 @@ export const Message = ({
   const handleDownloadImg = () => {
     saveAs(modalImg, "messanger_image.jpg");
   };
-
+  console.log('====================================');
+  console.log(message);
+  console.log('====================================');
   if (isBot) {
     return (
       <div
